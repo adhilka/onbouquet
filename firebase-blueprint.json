@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "ShortLink": {
+      "title": "Short Link",
+      "description": "A mapping from a short ID to a long bouquet URL.",
+      "type": "object",
+      "properties": {
+        "longUrl": {
+          "type": "string",
+          "description": "The full bouquet URL with encoded state."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the short link was created."
+        }
+      },
+      "required": ["longUrl", "createdAt"]
+    }
+  },
+  "firestore": {
+    "shortLinks/{shortId}": {
+      "schema": "ShortLink",
+      "description": "Collection of short links."
+    }
+  }
+}

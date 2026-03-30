@@ -1,0 +1,247 @@
+import { FlowerType, BouquetStyle } from "./types";
+
+export const FLOWER_TYPES: FlowerType[] = [
+  {
+    id: "rose",
+    name: "Sketchy Rose",
+    color: "#F43F5E",
+    path: "M50 50 C50 30 70 20 80 30 C90 40 80 60 50 70 C20 60 10 40 20 30 C30 20 50 30 50 50 M50 50 C40 40 30 45 35 55 C40 65 60 65 65 55 C70 45 60 40 50 50 M45 45 Q50 35 55 45 M40 50 Q50 60 60 50 M50 25 Q60 15 70 25 M30 25 Q40 15 50 25",
+  },
+  {
+    id: "tulip",
+    name: "Sketchy Tulip",
+    color: "#FB923C",
+    path: "M50 85 C30 85 15 65 15 45 C15 25 30 15 50 35 C70 15 85 25 85 45 C85 65 70 85 50 85 M50 85 L50 45 M30 40 Q50 30 70 40 M40 30 Q50 20 60 30",
+  },
+  {
+    id: "sunflower",
+    name: "Sketchy Sunflower",
+    color: "#FACC15",
+    path: "M50 50 M50 5 L58 25 L80 10 L70 30 L95 25 L80 50 L95 75 L70 70 L80 90 L58 75 L50 95 L42 75 L20 90 L30 70 L5 75 L20 50 L5 25 L30 30 L20 10 L42 25 Z M50 50 A18 18 0 1 1 49.9 50 M50 40 Q60 40 60 50 Q60 60 50 60 Q40 60 40 50 Q40 40 50 40",
+  },
+  {
+    id: "lavender",
+    name: "Sketchy Lavender",
+    color: "#A78BFA",
+    path: "M50 95 L50 5 M42 15 A6 6 0 1 1 58 15 M38 30 A6 6 0 1 1 62 30 M42 45 A6 6 0 1 1 58 45 M38 60 A6 6 0 1 1 62 60 M42 75 A6 6 0 1 1 58 75 M50 10 L50 90",
+  },
+  {
+    id: "daisy",
+    name: "Sketchy Daisy",
+    color: "#FFFFFF",
+    path: "M50 50 M50 5 Q65 5 65 25 Q65 45 50 45 Q35 45 35 25 Q35 5 50 5 M95 50 Q95 65 75 65 Q55 65 55 50 Q55 35 75 35 Q95 35 95 50 M50 95 Q35 95 35 75 Q35 55 50 55 Q65 55 65 75 Q65 95 50 95 M5 50 Q5 35 25 35 Q45 35 45 50 Q45 65 25 65 Q5 65 5 50 M82 18 Q90 25 78 37 Q66 49 59 42 Q52 35 64 23 Q76 11 82 18 M82 82 Q75 90 63 78 Q51 66 58 59 Q65 52 77 64 Q89 76 82 82 M18 82 Q10 75 22 63 Q34 51 41 58 Q48 65 36 77 Q24 89 18 82 M18 18 Q25 10 37 22 Q49 34 42 41 Q35 48 23 36 Q11 24 18 18 M50 50 A12 12 0 1 1 49.9 50",
+  },
+  {
+    id: "lily",
+    name: "Sketchy Lily",
+    color: "#FDF4FF",
+    path: "M50 15 C65 40 95 55 50 90 C5 55 35 40 50 15 M50 30 C58 48 80 55 50 80 C20 55 42 48 50 30 M50 50 A6 6 0 1 1 49.9 50 M50 20 L50 80 M20 50 L80 50",
+  },
+  {
+    id: "cherry-blossom",
+    name: "Sakura",
+    color: "#FBCFE8",
+    path: "M50 50 M50 10 C60 10 70 20 70 30 C70 40 60 50 50 50 C40 50 30 40 30 30 C30 20 40 10 50 10 M50 50 C60 50 70 60 70 70 C70 80 60 90 50 90 C40 90 30 80 30 70 C30 60 40 50 50 50 M50 50 C40 50 30 50 20 50 C10 50 10 40 10 30 C10 20 20 10 30 10 M50 50 C60 50 70 50 80 50 C90 50 90 60 90 70 C90 80 80 90 70 90",
+  },
+  {
+    id: "orchid",
+    name: "Orchid",
+    color: "#D8B4FE",
+    path: "M50 50 C60 30 80 30 80 50 C80 70 60 70 50 90 C40 70 20 70 20 50 C20 30 40 30 50 50 M50 50 C55 40 65 40 65 50 C65 60 55 60 50 70 C45 60 35 60 35 50 C35 40 45 40 50 50",
+  },
+  {
+    id: "lotus",
+    name: "Lotus",
+    color: "#F472B6",
+    path: "M50 80 C30 80 10 60 10 40 C10 20 30 10 50 30 C70 10 90 20 90 40 C90 60 70 80 50 80 M50 80 C40 70 30 70 20 60 C10 50 10 40 20 30 M50 80 C60 70 70 70 80 60 C90 50 90 40 80 30",
+  },
+];
+
+export const PRESET_LAYOUTS = [
+  {
+    id: "heart",
+    name: "Heart Shape",
+    flowers: [
+      { typeId: "rose", x: 150, y: 100, scale: 1, rotation: 0 },
+      { typeId: "tulip", x: 250, y: 100, scale: 1, rotation: 0 },
+      { typeId: "lily", x: 100, y: 180, scale: 1, rotation: -20 },
+      { typeId: "lavender", x: 300, y: 180, scale: 1, rotation: 20 },
+      { typeId: "sunflower", x: 150, y: 280, scale: 1, rotation: -40 },
+      { typeId: "daisy", x: 250, y: 280, scale: 1, rotation: 40 },
+      { typeId: "cherry-blossom", x: 200, y: 350, scale: 1.2, rotation: 0 },
+    ]
+  },
+  {
+    id: "circle",
+    name: "Floral Wreath",
+    flowers: [
+      { typeId: "lavender", x: 200, y: 80, scale: 1, rotation: 0 },
+      { typeId: "sunflower", x: 280, y: 120, scale: 1, rotation: 45 },
+      { typeId: "rose", x: 320, y: 200, scale: 1, rotation: 90 },
+      { typeId: "tulip", x: 280, y: 280, scale: 1, rotation: 135 },
+      { typeId: "lily", x: 200, y: 320, scale: 1, rotation: 180 },
+      { typeId: "daisy", x: 120, y: 280, scale: 1, rotation: 225 },
+      { typeId: "cherry-blossom", x: 80, y: 200, scale: 1, rotation: 270 },
+      { typeId: "lavender", x: 120, y: 120, scale: 1, rotation: 315 },
+    ]
+  },
+  {
+    id: "bouquet",
+    name: "Classic Bouquet",
+    flowers: [
+      { typeId: "rose", x: 200, y: 150, scale: 1.4, rotation: 0 },
+      { typeId: "tulip", x: 160, y: 220, scale: 1.1, rotation: -15 },
+      { typeId: "lily", x: 240, y: 220, scale: 1.1, rotation: 15 },
+      { typeId: "sunflower", x: 200, y: 280, scale: 1, rotation: 0 },
+      { typeId: "lavender", x: 140, y: 160, scale: 0.8, rotation: -30 },
+      { typeId: "daisy", x: 260, y: 160, scale: 0.8, rotation: 30 },
+    ]
+  },
+  {
+    id: "spiral",
+    name: "Spiral Dance",
+    flowers: [
+      { typeId: "rose", x: 200, y: 200, scale: 1.5, rotation: 0 },
+      { typeId: "tulip", x: 250, y: 150, scale: 1.2, rotation: 45 },
+      { typeId: "lily", x: 280, y: 220, scale: 1, rotation: 90 },
+      { typeId: "sunflower", x: 220, y: 280, scale: 0.9, rotation: 135 },
+      { typeId: "lavender", x: 150, y: 250, scale: 0.8, rotation: 180 },
+      { typeId: "daisy", x: 120, y: 180, scale: 0.7, rotation: 225 },
+      { typeId: "cherry-blossom", x: 180, y: 120, scale: 0.6, rotation: 270 },
+    ]
+  },
+  {
+    id: "v-shape",
+    name: "V-Formation",
+    flowers: [
+      { typeId: "rose", x: 200, y: 350, scale: 1.2, rotation: 0 },
+      { typeId: "tulip", x: 150, y: 250, scale: 1.1, rotation: -10 },
+      { typeId: "lily", x: 250, y: 250, scale: 1.1, rotation: 10 },
+      { typeId: "sunflower", x: 100, y: 150, scale: 1, rotation: -20 },
+      { typeId: "lavender", x: 300, y: 150, scale: 1, rotation: 20 },
+      { typeId: "daisy", x: 50, y: 50, scale: 0.9, rotation: -30 },
+      { typeId: "cherry-blossom", x: 350, y: 50, scale: 0.9, rotation: 30 },
+    ]
+  },
+  {
+    id: "random",
+    name: "Wild Garden",
+    flowers: [
+      { typeId: "rose", x: 100, y: 100, scale: 1, rotation: 15 },
+      { typeId: "tulip", x: 300, y: 150, scale: 1.2, rotation: -20 },
+      { typeId: "lily", x: 150, y: 300, scale: 1.1, rotation: 45 },
+      { typeId: "sunflower", x: 250, y: 350, scale: 1.3, rotation: 10 },
+      { typeId: "lavender", x: 50, y: 250, scale: 0.8, rotation: -30 },
+      { typeId: "daisy", x: 350, y: 250, scale: 0.9, rotation: 60 },
+      { typeId: "cherry-blossom", x: 200, y: 50, scale: 0.7, rotation: 0 },
+      { typeId: "orchid", x: 50, y: 50, scale: 1, rotation: -15 },
+      { typeId: "lotus", x: 350, y: 50, scale: 1.1, rotation: 15 },
+    ]
+  },
+  {
+    id: "grid",
+    name: "Modern Grid",
+    flowers: [
+      { typeId: "rose", x: 100, y: 100, scale: 1, rotation: 0 },
+      { typeId: "tulip", x: 200, y: 100, scale: 1, rotation: 0 },
+      { typeId: "lily", x: 300, y: 100, scale: 1, rotation: 0 },
+      { typeId: "sunflower", x: 100, y: 200, scale: 1, rotation: 0 },
+      { typeId: "lavender", x: 200, y: 200, scale: 1, rotation: 0 },
+      { typeId: "daisy", x: 300, y: 200, scale: 1, rotation: 0 },
+      { typeId: "cherry-blossom", x: 100, y: 300, scale: 1, rotation: 0 },
+      { typeId: "orchid", x: 200, y: 300, scale: 1, rotation: 0 },
+      { typeId: "lotus", x: 300, y: 300, scale: 1, rotation: 0 },
+    ]
+  }
+];
+
+export const BOUQUET_STYLES: BouquetStyle[] = [
+  {
+    id: "sketchy",
+    name: "Hand-Drawn",
+    bgGradient: "bg-linear-to-b from-stone-50 to-stone-100",
+    bgPattern: "texture-fibers bg-blend-multiply",
+    accentBg: "bg-stone-800",
+    accentText: "text-stone-800",
+    accentBorder: "border-stone-900",
+    secondaryBg: "bg-stone-50",
+    secondaryText: "text-stone-600",
+  },
+  {
+    id: "romantic",
+    name: "Romantic Blush",
+    bgGradient: "bg-linear-to-b from-rose-50 to-pink-100",
+    bgPattern: "texture-natural bg-blend-multiply",
+    accentBg: "bg-rose-500",
+    accentText: "text-rose-500",
+    accentBorder: "border-rose-600",
+    secondaryBg: "bg-rose-50",
+    secondaryText: "text-rose-600",
+  },
+  {
+    id: "serene",
+    name: "Serene Morning",
+    bgGradient: "bg-linear-to-b from-blue-50 to-indigo-100",
+    bgPattern: "texture-handmade bg-blend-multiply",
+    accentBg: "bg-blue-500",
+    accentText: "text-blue-500",
+    accentBorder: "border-blue-600",
+    secondaryBg: "bg-blue-50",
+    secondaryText: "text-blue-600",
+  },
+  {
+    id: "golden",
+    name: "Golden Hour",
+    bgGradient: "bg-linear-to-b from-amber-50 to-orange-100",
+    bgPattern: "texture-lined bg-blend-multiply",
+    accentBg: "bg-amber-500",
+    accentText: "text-amber-500",
+    accentBorder: "border-amber-600",
+    secondaryBg: "bg-amber-50",
+    secondaryText: "text-amber-600",
+  },
+  {
+    id: "midnight",
+    name: "Midnight Dream",
+    bgGradient: "bg-linear-to-b from-slate-900 to-indigo-950",
+    bgPattern: "texture-noise bg-blend-overlay",
+    accentBg: "bg-indigo-400",
+    accentText: "text-indigo-400",
+    accentBorder: "border-indigo-500",
+    secondaryBg: "bg-indigo-900/50",
+    secondaryText: "text-indigo-200",
+  },
+  {
+    id: "sunset",
+    name: "Sunset Glow",
+    bgGradient: "bg-linear-to-b from-orange-100 to-rose-200",
+    bgPattern: "texture-diamond bg-blend-multiply",
+    accentBg: "bg-orange-500",
+    accentText: "text-orange-500",
+    accentBorder: "border-orange-600",
+    secondaryBg: "bg-orange-50",
+    secondaryText: "text-orange-600",
+  },
+  {
+    id: "vintage",
+    name: "Vintage Paper",
+    bgGradient: "bg-linear-to-b from-amber-50 to-orange-100",
+    bgPattern: "texture-graph bg-blend-multiply",
+    accentBg: "bg-amber-700",
+    accentText: "text-amber-700",
+    accentBorder: "border-amber-800",
+    secondaryBg: "bg-amber-50",
+    secondaryText: "text-amber-800",
+  },
+  {
+    id: "forest",
+    name: "Forest Mist",
+    bgGradient: "bg-linear-to-b from-emerald-50 to-teal-100",
+    bgPattern: "texture-cubes bg-blend-multiply",
+    accentBg: "bg-emerald-600",
+    accentText: "text-emerald-600",
+    accentBorder: "border-emerald-700",
+    secondaryBg: "bg-emerald-50",
+    secondaryText: "text-emerald-700",
+  }
+];

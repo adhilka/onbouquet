@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Indie Flower", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sketch: "Indie Flower", cursive;
+}
+
+@layer base {
+  body {
+    @apply font-sketch text-gray-800;
+  }
+}
+
+@layer utilities {
+  .sketch-border {
+    border: 2px solid currentColor;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  }
+  
+  .sketch-shadow {
+    box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+  }
+  
+  .texture-fibers { background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png"); }
+  .texture-natural { background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png"); }
+  .texture-handmade { background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png"); }
+  .texture-lined { background-image: url("https://www.transparenttextures.com/patterns/lined-paper.png"); }
+  .texture-graph { background-image: url("https://www.transparenttextures.com/patterns/graphy.png"); }
+  .texture-noise { background-image: url("https://www.transparenttextures.com/patterns/stardust.png"); }
+  .texture-diamond { background-image: url("https://www.transparenttextures.com/patterns/white-diamond.png"); }
+  .texture-cubes { background-image: url("https://www.transparenttextures.com/patterns/cubes.png"); }
+  
+  .bg-blend-multiply { background-blend-mode: multiply; }
+  .bg-blend-overlay { background-blend-mode: overlay; }
+  .bg-blend-soft-light { background-blend-mode: soft-light; }
+}
+
+@layer base {
+  body {
+    @apply overflow-hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

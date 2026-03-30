@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidShortLink(data) {
+      return data.keys().hasAll(['longUrl', 'createdAt']) &&
+             data.longUrl is string &&
+             data.longUrl.size() > 0 &&
+             data.longUrl.size() < 10000 &&
+             data.createdAt is string;
+    }
+
+    match /shortLinks/{shortId} {
+      // Allow anyone to read a short link by its ID
+      allow get: if true;
+      // Allow anyone to create a short link (for sharing)
+      allow create: if isValidShortLink(request.resource.data);
+      // Deny updates and deletes
+      allow update, delete: if false;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
