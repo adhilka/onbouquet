@@ -53,20 +53,31 @@ export const Flower: React.FC<FlowerProps> = ({
       animate={{ opacity: 1, scale: instance.scale }}
       whileHover={isEditing ? { scale: instance.scale * 1.1 } : {}}
     >
-      <svg
-        viewBox="0 0 100 100"
-        className="w-24 h-24 drop-shadow-lg"
-        style={{ fill: type.color }}
-      >
-        <path
-          d={type.path}
-          stroke="black"
-          strokeWidth="1"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fillOpacity="0.8"
-        />
-      </svg>
+      {type.imageUrl ? (
+        <div className="w-24 h-24 flex items-center justify-center">
+          <img 
+            src={type.imageUrl} 
+            alt={type.name}
+            className="w-full h-full object-contain drop-shadow-xl"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      ) : (
+        <svg
+          viewBox="0 0 100 100"
+          className="w-24 h-24 drop-shadow-lg"
+          style={{ fill: type.color }}
+        >
+          <path
+            d={type.path}
+            stroke="black"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fillOpacity="0.8"
+          />
+        </svg>
+      )}
       
       {instance.note && (
         <motion.div

@@ -24,6 +24,7 @@ export interface FlowerType {
   name: string;
   color: string;
   path: string;
+  imageUrl?: string;
 }
 
 export interface BouquetStyle {

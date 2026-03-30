@@ -3,39 +3,63 @@ import { FlowerType, BouquetStyle } from "./types";
 export const FLOWER_TYPES: FlowerType[] = [
   {
     id: "rose",
-    name: "Sketchy Rose",
+    name: "Rose",
     color: "#F43F5E",
     path: "M50 50 C50 30 70 20 80 30 C90 40 80 60 50 70 C20 60 10 40 20 30 C30 20 50 30 50 50 M50 50 C40 40 30 45 35 55 C40 65 60 65 65 55 C70 45 60 40 50 50 M45 45 Q50 35 55 45 M40 50 Q50 60 60 50 M50 25 Q60 15 70 25 M30 25 Q40 15 50 25",
   },
   {
     id: "tulip",
-    name: "Sketchy Tulip",
+    name: "Tulip",
     color: "#FB923C",
     path: "M50 85 C30 85 15 65 15 45 C15 25 30 15 50 35 C70 15 85 25 85 45 C85 65 70 85 50 85 M50 85 L50 45 M30 40 Q50 30 70 40 M40 30 Q50 20 60 30",
   },
   {
     id: "sunflower",
-    name: "Sketchy Sunflower",
+    name: "Sunflower",
     color: "#FACC15",
     path: "M50 50 M50 5 L58 25 L80 10 L70 30 L95 25 L80 50 L95 75 L70 70 L80 90 L58 75 L50 95 L42 75 L20 90 L30 70 L5 75 L20 50 L5 25 L30 30 L20 10 L42 25 Z M50 50 A18 18 0 1 1 49.9 50 M50 40 Q60 40 60 50 Q60 60 50 60 Q40 60 40 50 Q40 40 50 40",
   },
   {
     id: "lavender",
-    name: "Sketchy Lavender",
+    name: "Lavender",
     color: "#A78BFA",
     path: "M50 95 L50 5 M42 15 A6 6 0 1 1 58 15 M38 30 A6 6 0 1 1 62 30 M42 45 A6 6 0 1 1 58 45 M38 60 A6 6 0 1 1 62 60 M42 75 A6 6 0 1 1 58 75 M50 10 L50 90",
   },
   {
     id: "daisy",
-    name: "Sketchy Daisy",
+    name: "Daisy",
     color: "#FFFFFF",
     path: "M50 50 M50 5 Q65 5 65 25 Q65 45 50 45 Q35 45 35 25 Q35 5 50 5 M95 50 Q95 65 75 65 Q55 65 55 50 Q55 35 75 35 Q95 35 95 50 M50 95 Q35 95 35 75 Q35 55 50 55 Q65 55 65 75 Q65 95 50 95 M5 50 Q5 35 25 35 Q45 35 45 50 Q45 65 25 65 Q5 65 5 50 M82 18 Q90 25 78 37 Q66 49 59 42 Q52 35 64 23 Q76 11 82 18 M82 82 Q75 90 63 78 Q51 66 58 59 Q65 52 77 64 Q89 76 82 82 M18 82 Q10 75 22 63 Q34 51 41 58 Q48 65 36 77 Q24 89 18 82 M18 18 Q25 10 37 22 Q49 34 42 41 Q35 48 23 36 Q11 24 18 18 M50 50 A12 12 0 1 1 49.9 50",
   },
   {
     id: "lily",
-    name: "Sketchy Lily",
+    name: "Lily",
     color: "#FDF4FF",
     path: "M50 15 C65 40 95 55 50 90 C5 55 35 40 50 15 M50 30 C58 48 80 55 50 80 C20 55 42 48 50 30 M50 50 A6 6 0 1 1 49.9 50 M50 20 L50 80 M20 50 L80 50",
+  },
+  {
+    id: "peony",
+    name: "Peony",
+    color: "#FBCFE8",
+    path: "M50 50 M50 15 C70 15 85 35 85 50 C85 65 70 85 50 85 C30 85 15 65 15 50 C15 35 30 15 50 15 M50 30 C60 30 70 40 70 50 C70 60 60 70 50 70 C40 70 30 60 30 50 C30 40 40 30 50 30 M50 40 Q55 40 55 50 Q55 60 50 60 Q45 60 45 50 Q45 40 50 40",
+  },
+  {
+    id: "poppy",
+    name: "Poppy",
+    color: "#EF4444",
+    path: "M50 50 M50 20 C70 20 80 40 80 50 C80 60 70 80 50 80 C30 80 20 60 20 50 C20 40 30 20 50 20 M50 40 A10 10 0 1 1 49.9 40 M50 50 L50 80 M40 45 L60 55 M40 55 L60 45",
+  },
+  {
+    id: "hydrangea",
+    name: "Hydrangea",
+    color: "#60A5FA",
+    path: "M50 50 M40 40 A5 5 0 1 1 50 40 A5 5 0 1 1 60 40 M40 50 A5 5 0 1 1 50 50 A5 5 0 1 1 60 50 M40 60 A5 5 0 1 1 50 60 A5 5 0 1 1 60 60 M30 50 A5 5 0 1 1 40 50 M60 50 A5 5 0 1 1 70 50",
+  },
+  {
+    id: "carnation",
+    name: "Carnation",
+    color: "#F472B6",
+    path: "M50 10 L55 20 L65 15 L60 25 L75 25 L65 35 L80 45 L65 50 L75 65 L60 65 L65 80 L55 70 L50 85 L45 70 L35 80 L40 65 L25 65 L35 50 L20 45 L35 35 L25 25 L40 25 L35 15 L45 20 Z",
   },
   {
     id: "cherry-blossom",
@@ -54,6 +78,13 @@ export const FLOWER_TYPES: FlowerType[] = [
     name: "Lotus",
     color: "#F472B6",
     path: "M50 80 C30 80 10 60 10 40 C10 20 30 10 50 30 C70 10 90 20 90 40 C90 60 70 80 50 80 M50 80 C40 70 30 70 20 60 C10 50 10 40 20 30 M50 80 C60 70 70 70 80 60 C90 50 90 40 80 30",
+  },
+  {
+    id: "custom-lotus",
+    name: "Custom Lotus",
+    color: "#D946EF",
+    path: "",
+    imageUrl: "/flowers/custom-lotus.png",
   },
 ];
 
@@ -136,6 +167,18 @@ export const PRESET_LAYOUTS = [
       { typeId: "cherry-blossom", x: 200, y: 50, scale: 0.7, rotation: 0 },
       { typeId: "orchid", x: 50, y: 50, scale: 1, rotation: -15 },
       { typeId: "lotus", x: 350, y: 50, scale: 1.1, rotation: 15 },
+    ]
+  },
+  {
+    id: "meadow",
+    name: "Spring Meadow",
+    flowers: [
+      { typeId: "peony", x: 100, y: 150, scale: 1.2, rotation: 10 },
+      { typeId: "poppy", x: 200, y: 100, scale: 1, rotation: -5 },
+      { typeId: "hydrangea", x: 300, y: 150, scale: 1.3, rotation: 15 },
+      { typeId: "carnation", x: 150, y: 250, scale: 1.1, rotation: -10 },
+      { typeId: "daisy", x: 250, y: 250, scale: 0.9, rotation: 20 },
+      { typeId: "lavender", x: 200, y: 350, scale: 1, rotation: 0 },
     ]
   },
   {

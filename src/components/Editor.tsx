@@ -294,10 +294,19 @@ export const Editor: React.FC = () => {
                     onClick={() => addFlower(type.id)}
                     className="flex flex-col items-center gap-2 group"
                   >
-                    <div className={cn("w-full aspect-square rounded-2xl bg-gray-50 flex items-center justify-center transition-colors", `group-hover:${currentStyle.secondaryBg}`)}>
-                      <svg viewBox="0 0 100 100" className="w-10 h-10" style={{ fill: type.color }}>
-                        <path d={type.path} stroke="black" strokeWidth="2" />
-                      </svg>
+                    <div className={cn("w-full aspect-square rounded-2xl bg-gray-50 flex items-center justify-center transition-colors overflow-hidden", `group-hover:${currentStyle.secondaryBg}`)}>
+                      {type.imageUrl ? (
+                        <img 
+                          src={type.imageUrl} 
+                          alt={type.name} 
+                          className="w-full h-full object-contain p-2"
+                          referrerPolicy="no-referrer"
+                        />
+                      ) : (
+                        <svg viewBox="0 0 100 100" className="w-10 h-10" style={{ fill: type.color }}>
+                          <path d={type.path} stroke="black" strokeWidth="2" />
+                        </svg>
+                      )}
                     </div>
                     <span className="text-[10px] font-bold text-gray-400 truncate w-full text-center">{type.name}</span>
                   </button>
