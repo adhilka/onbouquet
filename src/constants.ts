@@ -5,7 +5,8 @@ export const FLOWER_TYPES: FlowerType[] = [
     id: "rose",
     name: "Rose",
     color: "#F43F5E",
-    path: "M50 50 C50 30 70 20 80 30 C90 40 80 60 50 70 C20 60 10 40 20 30 C30 20 50 30 50 50 M50 50 C40 40 30 45 35 55 C40 65 60 65 65 55 C70 45 60 40 50 50 M45 45 Q50 35 55 45 M40 50 Q50 60 60 50 M50 25 Q60 15 70 25 M30 25 Q40 15 50 25",
+    path: "",
+    imageUrl: "https://i.ibb.co/XxLP41X6/1000094942-removebg-preview.png",
   },
   {
     id: "tulip",
@@ -39,10 +40,11 @@ export const FLOWER_TYPES: FlowerType[] = [
     path: "M50 15 C65 40 95 55 50 90 C5 55 35 40 50 15 M50 30 C58 48 80 55 50 80 C20 55 42 48 50 30 M50 50 A6 6 0 1 1 49.9 50 M50 20 L50 80 M20 50 L80 50",
   },
   {
-    id: "peony",
-    name: "Peony",
-    color: "#FBCFE8",
-    path: "M50 50 M50 15 C70 15 85 35 85 50 C85 65 70 85 50 85 C30 85 15 65 15 50 C15 35 30 15 50 15 M50 30 C60 30 70 40 70 50 C70 60 60 70 50 70 C40 70 30 60 30 50 C30 40 40 30 50 30 M50 40 Q55 40 55 50 Q55 60 50 60 Q45 60 45 50 Q45 40 50 40",
+    id: "misty-orange",
+    name: "Misty Orange",
+    color: "#FB923C",
+    path: "",
+    imageUrl: "https://i.ibb.co/XkJ6cxT3/1000094949-removebg-preview.png",
   },
   {
     id: "poppy",
@@ -87,6 +89,20 @@ export const FLOWER_TYPES: FlowerType[] = [
     path: "",
     imageUrl: "https://i.ibb.co/zWk432qV/1000094564-removebg-preview.png",
   },
+  {
+    id: "blue-blossom",
+    name: "Blue Blossom",
+    color: "#93C5FD",
+    path: "",
+    imageUrl: "https://i.ibb.co/fY7qhLsD/1000094930-removebg-preview.png",
+  },
+  {
+    id: "sundrop",
+    name: "Sundrop",
+    color: "#FDE047",
+    path: "",
+    imageUrl: "https://i.ibb.co/ffKhKwc/1000094936-removebg-preview.png",
+  },
 ];
 
 export const PRESET_LAYOUTS = [
@@ -115,7 +131,7 @@ export const PRESET_LAYOUTS = [
       { typeId: "lily", x: 200, y: 320, scale: 1.2, rotation: 180 },
       { typeId: "sunflower", x: 115, y: 285, scale: 1.1, rotation: 225 },
       { typeId: "cherry-blossom", x: 80, y: 200, scale: 1.2, rotation: 270 },
-      { typeId: "peony", x: 115, y: 115, scale: 1.1, rotation: 315 },
+      { typeId: "misty-orange", x: 115, y: 115, scale: 1.1, rotation: 315 },
     ]
   },
   {
@@ -123,7 +139,7 @@ export const PRESET_LAYOUTS = [
     name: "Classic Bouquet",
     flowers: [
       { typeId: "rose", x: 200, y: 180, scale: 1.5, rotation: 0 },
-      { typeId: "peony", x: 150, y: 220, scale: 1.3, rotation: -15 },
+      { typeId: "misty-orange", x: 150, y: 220, scale: 1.3, rotation: -15 },
       { typeId: "lily", x: 250, y: 220, scale: 1.3, rotation: 15 },
       { typeId: "tulip", x: 120, y: 160, scale: 1.1, rotation: -30 },
       { typeId: "tulip", x: 280, y: 160, scale: 1.1, rotation: 30 },
@@ -172,14 +188,14 @@ export const PRESET_LAYOUTS = [
       { typeId: "cherry-blossom", x: 200, y: 80, scale: 0.8, rotation: 0 },
       { typeId: "orchid", x: 80, y: 60, scale: 1.1, rotation: -15 },
       { typeId: "lotus", x: 340, y: 60, scale: 1.2, rotation: 15 },
-      { typeId: "peony", x: 200, y: 200, scale: 1.5, rotation: 5 },
+      { typeId: "misty-orange", x: 200, y: 200, scale: 1.5, rotation: 5 },
     ]
   },
   {
     id: "meadow",
     name: "Spring Meadow",
     flowers: [
-      { typeId: "peony", x: 120, y: 160, scale: 1.3, rotation: 10 },
+      { typeId: "misty-orange", x: 120, y: 160, scale: 1.3, rotation: 10 },
       { typeId: "poppy", x: 200, y: 120, scale: 1.1, rotation: -5 },
       { typeId: "hydrangea", x: 280, y: 160, scale: 1.4, rotation: 15 },
       { typeId: "carnation", x: 160, y: 260, scale: 1.2, rotation: -10 },
