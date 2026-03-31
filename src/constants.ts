@@ -17,7 +17,8 @@ export const FLOWER_TYPES: FlowerType[] = [
     id: "sunflower",
     name: "Sunflower",
     color: "#FACC15",
-    path: "M50 50 M50 5 L58 25 L80 10 L70 30 L95 25 L80 50 L95 75 L70 70 L80 90 L58 75 L50 95 L42 75 L20 90 L30 70 L5 75 L20 50 L5 25 L30 30 L20 10 L42 25 Z M50 50 A18 18 0 1 1 49.9 50 M50 40 Q60 40 60 50 Q60 60 50 60 Q40 60 40 50 Q40 40 50 40",
+    path: "",
+    imageUrl: "https://i.ibb.co/NMhWshG/1000094921-removebg-preview.png",
   },
   {
     id: "lavender",
