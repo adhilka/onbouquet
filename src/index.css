@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply font-sketch text-gray-800;
+    @apply font-sketch text-rose-800;
   }
 }
 
@@ -19,7 +19,7 @@
   }
   
   .sketch-shadow {
-    box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+    box-shadow: 4px 4px 0px 0px rgba(244, 63, 94, 0.2);
   }
   
   .texture-fibers { background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png"); }

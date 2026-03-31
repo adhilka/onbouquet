@@ -134,7 +134,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="w-56 h-56 bg-white flex items-center justify-center relative z-10 cursor-pointer group sketch-border border-stone-800 sketch-shadow"
+                className="w-56 h-56 bg-white flex items-center justify-center relative z-10 cursor-pointer group sketch-border border-rose-800 sketch-shadow"
                 onClick={handleOpen}
               >
                 {isLocked ? (
@@ -155,13 +155,13 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
             </div>
 
             <div className="space-y-3">
-              <h1 className="text-4xl font-bold text-stone-800 font-sketch tracking-tight">{initialState.revealConfig?.title || "A Special Delivery"}</h1>
-              <p className="text-stone-500 font-medium">{initialState.revealConfig?.subtitle || `From ${initialState.letter.from || "Someone Special"}`}</p>
+              <h1 className="text-4xl font-bold text-rose-800 font-sketch tracking-tight">{initialState.revealConfig?.title || "A Special Delivery"}</h1>
+              <p className="text-rose-500 font-medium">{initialState.revealConfig?.subtitle || `From ${initialState.letter.from || "Someone Special"}`}</p>
             </div>
 
             {isLocked && (
-              <div className="bg-white/60 backdrop-blur-md px-8 py-4 rounded-3xl border-2 border-stone-800/10 shadow-lg">
-                <p className="text-sm font-bold text-stone-600 uppercase tracking-widest">Unlocks {timeLeft}</p>
+              <div className="bg-white/60 backdrop-blur-md px-8 py-4 rounded-3xl border-2 border-rose-800/10 shadow-lg">
+                <p className="text-sm font-bold text-rose-600 uppercase tracking-widest">Unlocks {timeLeft}</p>
               </div>
             )}
 
@@ -234,7 +234,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                 mass: 0.8
               }}
               className={cn(
-                "bg-white/95 backdrop-blur-sm p-6 md:p-8 border-t-4 border-stone-800 sketch-shadow sketch-border relative z-50 mt-auto flex flex-col transition-all duration-500",
+                "bg-white/95 backdrop-blur-sm p-6 md:p-8 border-t-4 border-rose-800 sketch-shadow sketch-border relative z-50 mt-auto flex flex-col transition-all duration-500",
                 isLetterFullScreen ? "rounded-t-none" : "rounded-t-[3rem] mx-auto w-full"
               )}
               onClick={(e) => e.stopPropagation()}
@@ -247,12 +247,12 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                     setIsLetterMinimized(!isLetterMinimized);
                     if (isLetterFullScreen) setIsLetterFullScreen(false);
                   }}
-                  className="bg-white border-2 border-stone-800 rounded-full p-1 sketch-shadow hover:scale-110 transition-transform active:scale-95"
+                  className="bg-white border-2 border-rose-800 rounded-full p-1 sketch-shadow hover:scale-110 transition-transform active:scale-95"
                 >
                   {isLetterMinimized ? (
-                    <ChevronUp className="text-stone-800" size={14} />
+                    <ChevronUp className="text-rose-800" size={14} />
                   ) : (
-                    <ChevronDown className="text-stone-800" size={14} />
+                    <ChevronDown className="text-rose-800" size={14} />
                   )}
                 </button>
 
@@ -260,12 +260,12 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                 {!isLetterMinimized && (
                   <button
                     onClick={() => setIsLetterFullScreen(!isLetterFullScreen)}
-                    className="bg-white border-2 border-stone-800 rounded-full p-1 sketch-shadow hover:scale-110 transition-transform active:scale-95"
+                    className="bg-white border-2 border-rose-800 rounded-full p-1 sketch-shadow hover:scale-110 transition-transform active:scale-95"
                   >
                     {isLetterFullScreen ? (
-                      <Minimize2 className="text-stone-800" size={14} />
+                      <Minimize2 className="text-rose-800" size={14} />
                     ) : (
-                      <Maximize2 className="text-stone-800" size={14} />
+                      <Maximize2 className="text-rose-800" size={14} />
                     )}
                   </button>
                 )}
@@ -276,13 +276,13 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                 <button
                   onClick={handleSaveImage}
                   disabled={isSaving}
-                  className="absolute top-4 right-4 p-2 bg-white/50 hover:bg-white rounded-full sketch-border border-stone-800 shadow-sm transition-all active:scale-95 z-[70] save-image-btn"
+                  className="absolute top-4 right-4 p-2 bg-white/50 hover:bg-white rounded-full sketch-border border-rose-800 shadow-sm transition-all active:scale-95 z-[70] save-image-btn"
                   title="Save as Image"
                 >
                   {isSaving ? (
-                    <Loader2 className="text-stone-800 animate-spin" size={16} />
+                    <Loader2 className="text-rose-800 animate-spin" size={16} />
                   ) : (
-                    <Download className="text-stone-800" size={16} />
+                    <Download className="text-rose-800" size={16} />
                   )}
                 </button>
               )}
@@ -293,8 +293,8 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
               )}>
                 <div className="flex justify-between items-start">
                   <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-black">To</span>
-                    <h2 className="text-2xl font-bold text-stone-800 mt-0.5">{initialState.letter.to || "You"}</h2>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-rose-400 font-black">To</span>
+                    <h2 className="text-2xl font-bold text-rose-800 mt-0.5">{initialState.letter.to || "You"}</h2>
                   </div>
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
@@ -305,19 +305,19 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                 </div>
                 
                 <div className="relative">
-                  <div className="absolute -left-4 top-0 text-4xl text-stone-200 font-serif">“</div>
+                  <div className="absolute -left-4 top-0 text-4xl text-rose-200 font-serif">“</div>
                   <p className={cn(
-                    "text-stone-700 leading-relaxed italic relative z-10 px-2",
+                    "text-rose-700 leading-relaxed italic relative z-10 px-2",
                     initialState.letter.content.length > 200 ? "text-lg" : "text-xl"
                   )}>
                     {initialState.letter.content}
                   </p>
-                  <div className="absolute -right-1 bottom-0 text-4xl text-stone-200 font-serif">”</div>
+                  <div className="absolute -right-1 bottom-0 text-4xl text-rose-200 font-serif">”</div>
                 </div>
 
                 <div className="text-right pt-2">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-black">With Love,</span>
-                  <p className="text-xl font-bold text-stone-800 mt-0.5">{initialState.letter.from || "Someone Special"}</p>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-rose-400 font-black">With Love,</span>
+                  <p className="text-xl font-bold text-rose-800 mt-0.5">{initialState.letter.from || "Someone Special"}</p>
                 </div>
               </div>
               
@@ -327,7 +327,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
               )}>
                 <button 
                   onClick={() => window.location.href = window.location.origin}
-                  className="w-full py-3 bg-stone-800 text-white rounded-2xl font-bold sketch-border border-stone-900 shadow-lg active:scale-95 transition-all text-sm tracking-wide"
+                  className="w-full py-3 bg-rose-800 text-white rounded-2xl font-bold sketch-border border-rose-900 shadow-lg active:scale-95 transition-all text-sm tracking-wide"
                 >
                   {isLetterMinimized ? "Create Bouquet 💐" : "Create your own bouquet 💐"}
                 </button>
@@ -338,10 +338,10 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
       </AnimatePresence>
 
       {/* Footer */}
-      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-sketch text-stone-500/40 pointer-events-none whitespace-nowrap z-[60] uppercase tracking-widest footer-text flex items-center gap-1.5">
-        <span>Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-500 underline">Muhammed Adhil</a> with Love</span>
+      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-sketch text-rose-500/40 pointer-events-none whitespace-nowrap z-[60] uppercase tracking-widest footer-text flex items-center gap-1.5">
+        <span>Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-rose-500 underline">Muhammed Adhil</a> with Love</span>
         <span>•</span>
-        <button onClick={() => setShowHowToUse(true)} className="pointer-events-auto hover:text-stone-500 underline uppercase tracking-widest">How to use</button>
+        <button onClick={() => setShowHowToUse(true)} className="pointer-events-auto hover:text-rose-500 underline uppercase tracking-widest">How to use</button>
       </div>
 
       <AnimatePresence>
@@ -365,8 +365,8 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
         </div>
 
         <div className="text-center space-y-4 pt-8 relative z-10 w-full shrink-0">
-          <h1 className="text-5xl font-bold text-stone-800 font-sketch tracking-tight">{initialState.revealConfig?.title || "A Special Delivery"}</h1>
-          <p className="text-xl text-stone-500 font-medium">{initialState.revealConfig?.subtitle || `From ${initialState.letter.from || "Someone Special"}`}</p>
+          <h1 className="text-5xl font-bold text-rose-800 font-sketch tracking-tight">{initialState.revealConfig?.title || "A Special Delivery"}</h1>
+          <p className="text-xl text-rose-500 font-medium">{initialState.revealConfig?.subtitle || `From ${initialState.letter.from || "Someone Special"}`}</p>
         </div>
 
         {/* Flowers Canvas */}
@@ -391,36 +391,36 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
         </div>
 
         {/* Letter Content */}
-        <div className="bg-white/95 backdrop-blur-sm p-10 border-4 border-stone-800 sketch-shadow sketch-border relative z-50 w-full max-w-2xl rounded-[3rem] shrink-0 mb-8">
+        <div className="bg-white/95 backdrop-blur-sm p-10 border-4 border-rose-800 sketch-shadow sketch-border relative z-50 w-full max-w-2xl rounded-[3rem] shrink-0 mb-8">
           <div className="space-y-8 font-sketch">
             <div className="flex justify-between items-start">
               <div>
-                <span className="text-sm uppercase tracking-[0.2em] text-stone-400 font-black">To</span>
-                <h2 className="text-4xl font-bold text-stone-800 mt-1">{initialState.letter.to || "You"}</h2>
+                <span className="text-sm uppercase tracking-[0.2em] text-rose-400 font-black">To</span>
+                <h2 className="text-4xl font-bold text-rose-800 mt-1">{initialState.letter.to || "You"}</h2>
               </div>
               <Heart className={cn("fill-current", currentStyle.accentText)} size={40} />
             </div>
             
             <div className="relative py-4">
-              <div className="absolute -left-4 top-0 text-6xl text-stone-200 font-serif">“</div>
+              <div className="absolute -left-4 top-0 text-6xl text-rose-200 font-serif">“</div>
               <p className={cn(
-                "text-stone-700 leading-relaxed italic relative z-10 px-6",
+                "text-rose-700 leading-relaxed italic relative z-10 px-6",
                 initialState.letter.content.length > 200 ? "text-2xl" : "text-3xl"
               )}>
                 {initialState.letter.content}
               </p>
-              <div className="absolute -right-1 bottom-0 text-6xl text-stone-200 font-serif">”</div>
+              <div className="absolute -right-1 bottom-0 text-6xl text-rose-200 font-serif">”</div>
             </div>
 
             <div className="text-right pt-4">
-              <span className="text-sm uppercase tracking-[0.2em] text-stone-400 font-black">With Love,</span>
-              <p className="text-3xl font-bold text-stone-800 mt-1">{initialState.letter.from || "Someone Special"}</p>
+              <span className="text-sm uppercase tracking-[0.2em] text-rose-400 font-black">With Love,</span>
+              <p className="text-3xl font-bold text-rose-800 mt-1">{initialState.letter.from || "Someone Special"}</p>
             </div>
           </div>
         </div>
 
-        <div className="text-sm font-sketch text-stone-500/60 mt-8 uppercase tracking-widest">
-          Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-500 underline">Muhammed Adhil</a> with Love
+        <div className="text-sm font-sketch text-rose-500/60 mt-8 uppercase tracking-widest">
+          Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-rose-500 underline">Muhammed Adhil</a> with Love
         </div>
       </div>
     </div>

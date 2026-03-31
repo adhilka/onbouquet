@@ -229,20 +229,20 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
   return (
     <div className="flex flex-col gap-2 h-full max-h-[80vh]">
       <div className="flex items-center justify-between px-1">
-        <h3 className="text-base font-sketch font-bold text-stone-800">Draw Flower</h3>
+        <h3 className="text-base font-sketch font-bold text-rose-800">Draw Flower</h3>
         <button 
           onClick={clearCanvas}
-          className="p-1.5 text-stone-400 hover:text-red-500 transition-colors"
+          className="p-1.5 text-rose-400 hover:text-red-500 transition-colors"
           title="Clear"
         >
           <Trash2 size={18} />
         </button>
       </div>
 
-      <div className="relative flex-1 bg-white rounded-xl border-2 border-stone-800 sketch-border overflow-hidden touch-none min-h-[200px] aspect-square mx-auto w-full max-w-[400px]">
+      <div className="relative flex-1 bg-white rounded-xl border-2 border-rose-800 sketch-border overflow-hidden touch-none min-h-[200px] aspect-square mx-auto w-full max-w-[400px]">
         {!isDrawing && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-            <p className="text-stone-800 font-sketch font-bold text-lg">Draw here...</p>
+            <p className="text-rose-800 font-sketch font-bold text-lg">Draw here...</p>
           </div>
         )}
         <canvas
@@ -260,13 +260,13 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
         />
       </div>
 
-      <div className="flex flex-wrap gap-2 items-center justify-between bg-stone-50 p-2 rounded-xl border-2 border-stone-800 sketch-border">
+      <div className="flex flex-wrap gap-2 items-center justify-between bg-rose-50 p-2 rounded-xl border-2 border-rose-800 sketch-border">
         <div className="flex gap-1">
           <button
             onClick={() => setTool("pen")}
             className={cn(
               "p-1.5 rounded-lg transition-all",
-              tool === "pen" ? "bg-stone-800 text-white" : "bg-white text-stone-400"
+              tool === "pen" ? "bg-rose-800 text-white" : "bg-white text-rose-400"
             )}
           >
             <Pen size={16} />
@@ -275,7 +275,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
             onClick={() => setTool("eraser")}
             className={cn(
               "p-1.5 rounded-lg transition-all",
-              tool === "eraser" ? "bg-stone-800 text-white" : "bg-white text-stone-400"
+              tool === "eraser" ? "bg-rose-800 text-white" : "bg-white text-rose-400"
             )}
           >
             <Eraser size={16} />
@@ -291,8 +291,8 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
                 setTool("pen");
               }}
               className={cn(
-                "w-5 h-5 rounded-full border border-stone-200 transition-transform hover:scale-110",
-                color === c && tool === "pen" && "ring-2 ring-stone-800 ring-offset-1"
+                "w-5 h-5 rounded-full border border-rose-200 transition-transform hover:scale-110",
+                color === c && tool === "pen" && "ring-2 ring-rose-800 ring-offset-1"
               )}
               style={{ backgroundColor: c }}
             />
@@ -306,7 +306,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
             max="20" 
             value={brushSize} 
             onChange={(e) => setBrushSize(parseInt(e.target.value))}
-            className="w-16 h-1 accent-stone-800"
+            className="w-16 h-1 accent-rose-800"
           />
         </div>
       </div>
@@ -314,13 +314,13 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
       <div className="flex gap-2">
         <button
           onClick={onClose}
-          className="flex-1 py-2 bg-white text-stone-800 font-bold rounded-xl border-2 border-stone-800 sketch-border active:scale-95 transition-all text-sm"
+          className="flex-1 py-2 bg-white text-rose-800 font-bold rounded-xl border-2 border-rose-800 sketch-border active:scale-95 transition-all text-sm"
         >
           Cancel
         </button>
         <button
           onClick={handleDownload}
-          className="w-10 py-2 bg-white text-stone-800 font-bold rounded-xl border-2 border-stone-800 sketch-border active:scale-95 transition-all flex items-center justify-center"
+          className="w-10 py-2 bg-white text-rose-800 font-bold rounded-xl border-2 border-rose-800 sketch-border active:scale-95 transition-all flex items-center justify-center"
           title="Download Flower"
         >
           <Download size={16} />

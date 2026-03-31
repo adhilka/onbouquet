@@ -254,8 +254,8 @@ export const Editor: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <p className="text-xl font-sketch font-bold text-stone-800">Start your bouquet</p>
-                <p className="text-stone-500 font-sketch italic text-sm">Choose a layout to begin, or tap + to add flowers manually</p>
+                <p className="text-xl font-sketch font-bold text-rose-800">Start your bouquet</p>
+                <p className="text-rose-500 font-sketch italic text-sm">Choose a layout to begin, or tap + to add flowers manually</p>
               </div>
               
               <div className="grid grid-cols-2 gap-3">
@@ -267,7 +267,7 @@ export const Editor: React.FC = () => {
                       applyLayout(layout.id);
                     }}
                     className={cn(
-                      "py-4 rounded-2xl bg-white/80 backdrop-blur-sm font-bold text-stone-600 transition-all text-sm sketch-border border-stone-800 sketch-shadow",
+                      "py-4 rounded-2xl bg-white/80 backdrop-blur-sm font-bold text-rose-600 transition-all text-sm sketch-border border-rose-800 sketch-shadow",
                       `hover:${currentStyle.accentBg} hover:text-white`
                     )}
                   >
@@ -296,7 +296,7 @@ export const Editor: React.FC = () => {
                     e.stopPropagation();
                     setActiveTab("draw");
                   }}
-                  className="w-full py-4 rounded-2xl font-bold text-stone-800 bg-white/80 backdrop-blur-sm transition-all sketch-border border-stone-800 sketch-shadow hover:bg-stone-800 hover:text-white"
+                  className="w-full py-4 rounded-2xl font-bold text-rose-800 bg-white/80 backdrop-blur-sm transition-all sketch-border border-rose-800 sketch-shadow hover:bg-rose-800 hover:text-white"
                 >
                   Draw Your Own Flower
                 </button>
@@ -306,7 +306,7 @@ export const Editor: React.FC = () => {
                       e.stopPropagation();
                       setShowHowToUse(true);
                     }} 
-                    className="text-[10px] text-stone-500 hover:text-stone-800 underline uppercase tracking-widest font-bold transition-colors"
+                    className="text-[10px] text-rose-500 hover:text-rose-800 underline uppercase tracking-widest font-bold transition-colors"
                   >
                     How to use
                   </button>
@@ -318,14 +318,14 @@ export const Editor: React.FC = () => {
       </div>
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40 bg-white/60 backdrop-blur-md p-1.5 rounded-full sketch-border border-stone-800 shadow-xl max-w-[95vw] overflow-x-auto scrollbar-hide">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40 bg-white/60 backdrop-blur-md p-1.5 rounded-full sketch-border border-rose-800 shadow-xl max-w-[95vw] overflow-x-auto scrollbar-hide">
         <button 
           onClick={() => setActiveTab(activeTab === "flowers" ? null : "flowers")}
           className={cn(
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "flowers" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
-              : "bg-white text-gray-600 border-stone-800"
+              : "bg-white text-rose-600 border-rose-800"
           )}
         >
           <Plus size={20} />
@@ -337,7 +337,7 @@ export const Editor: React.FC = () => {
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "layouts" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
-              : "bg-white text-gray-600 border-stone-800"
+              : "bg-white text-rose-600 border-rose-800"
           )}
         >
           <Layout size={18} />
@@ -349,7 +349,7 @@ export const Editor: React.FC = () => {
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "draw" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
-              : "bg-white text-gray-600 border-stone-800"
+              : "bg-white text-rose-600 border-rose-800"
           )}
         >
           <PenTool size={18} />
@@ -361,7 +361,7 @@ export const Editor: React.FC = () => {
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "letter" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
-              : "bg-white text-gray-600 border-stone-800"
+              : "bg-white text-rose-600 border-rose-800"
           )}
         >
           <Type size={18} />
@@ -373,7 +373,7 @@ export const Editor: React.FC = () => {
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "style" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
-              : "bg-white text-gray-600 border-stone-800"
+              : "bg-white text-rose-600 border-rose-800"
           )}
         >
           <Palette size={18} />
@@ -385,13 +385,13 @@ export const Editor: React.FC = () => {
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "reveal" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
-              : "bg-white text-gray-600 border-stone-800"
+              : "bg-white text-rose-600 border-rose-800"
           )}
         >
           <MessageSquare size={18} />
         </button>
 
-        <div className="w-px h-6 bg-stone-300 mx-0.5 shrink-0" />
+        <div className="w-px h-6 bg-rose-300 mx-0.5 shrink-0" />
 
         <button 
           onClick={handleShare}
@@ -412,7 +412,7 @@ export const Editor: React.FC = () => {
             initial={{ y: 100, opacity: 0, x: "-50%" }}
             animate={{ y: 0, opacity: 1, x: "-50%" }}
             exit={{ y: 100, opacity: 0, x: "-50%" }}
-            className="fixed bottom-20 left-1/2 w-[95%] max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-4 z-50 border-2 border-stone-800 sketch-border sketch-shadow"
+            className="fixed bottom-20 left-1/2 w-[95%] max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-4 z-50 border-2 border-rose-800 sketch-border sketch-shadow"
           >
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{activeTab}</h3>
@@ -446,7 +446,7 @@ export const Editor: React.FC = () => {
                     onClick={() => addFlower(type.id)}
                     className="flex flex-col items-center gap-1.5 group"
                   >
-                    <div className={cn("w-full aspect-square rounded-xl bg-gray-50 flex items-center justify-center transition-colors overflow-hidden border border-stone-100", `group-hover:${currentStyle.secondaryBg}`)}>
+                    <div className={cn("w-full aspect-square rounded-xl bg-gray-50 flex items-center justify-center transition-colors overflow-hidden border border-rose-100", `group-hover:${currentStyle.secondaryBg}`)}>
                       {type.imageUrl ? (
                         <img 
                           src={type.imageUrl} 
@@ -474,7 +474,7 @@ export const Editor: React.FC = () => {
                     key={layout.id}
                     onClick={() => applyLayout(layout.id)}
                     className={cn(
-                      "py-3 rounded-xl bg-gray-50 font-bold text-gray-600 transition-all text-xs border border-stone-100",
+                      "py-3 rounded-xl bg-gray-50 font-bold text-gray-600 transition-all text-xs border border-rose-100",
                       `hover:${currentStyle.accentBg} hover:text-white`
                     )}
                   >
@@ -624,52 +624,52 @@ export const Editor: React.FC = () => {
             initial={{ scale: 0.8, opacity: 0, y: 10, x: "-50%" }}
             animate={{ scale: 1, opacity: 1, y: 0, x: "-50%" }}
             exit={{ scale: 0.8, opacity: 0, y: 10, x: "-50%" }}
-            className="fixed bottom-22 left-1/2 bg-white/95 backdrop-blur-md rounded-lg px-2 py-2 z-50 border border-stone-800 sketch-border shadow-lg flex flex-col gap-1.5 w-[200px]"
+            className="fixed bottom-22 left-1/2 bg-white/95 backdrop-blur-md rounded-lg px-2 py-2 z-50 border border-rose-800 sketch-border shadow-lg flex flex-col gap-1.5 w-[200px]"
           >
             <div className="flex items-center justify-between">
               <div className="flex gap-1.5 items-center">
                 <button onClick={() => removeFlower(selectedId)} className="p-1 text-red-400 hover:text-red-500"><Trash2 size={12} /></button>
-                <div className="w-[1px] h-3 bg-stone-100" />
-                <span className="text-[7px] font-bold text-stone-300 uppercase">Edit</span>
+                <div className="w-[1px] h-3 bg-rose-100" />
+                <span className="text-[7px] font-bold text-rose-300 uppercase">Edit</span>
               </div>
-              <button onClick={() => setSelectedId(null)} className="text-stone-300 hover:text-stone-500"><X size={12} /></button>
+              <button onClick={() => setSelectedId(null)} className="text-rose-300 hover:text-rose-500"><X size={12} /></button>
             </div>
 
-            <div className="flex gap-2 items-center bg-stone-50/50 p-1 rounded-md border border-stone-100/50">
+            <div className="flex gap-2 items-center bg-rose-50/50 p-1 rounded-md border border-rose-100/50">
               {/* Ultra Compact PTZ */}
               <div className="grid grid-cols-3 gap-0.5">
                 <div />
-                <button onClick={() => moveFlower(selectedId, 0, -2)} className="p-0.5 bg-white rounded border border-stone-200"><ChevronUp size={10} /></button>
+                <button onClick={() => moveFlower(selectedId, 0, -2)} className="p-0.5 bg-white rounded border border-rose-200"><ChevronUp size={10} /></button>
                 <div />
-                <button onClick={() => moveFlower(selectedId, -2, 0)} className="p-0.5 bg-white rounded border border-stone-200"><ChevronLeft size={10} /></button>
-                <div className="w-3 h-3 flex items-center justify-center text-[5px] text-stone-300">2px</div>
-                <button onClick={() => moveFlower(selectedId, 2, 0)} className="p-0.5 bg-white rounded border border-stone-200"><ChevronRight size={10} /></button>
+                <button onClick={() => moveFlower(selectedId, -2, 0)} className="p-0.5 bg-white rounded border border-rose-200"><ChevronLeft size={10} /></button>
+                <div className="w-3 h-3 flex items-center justify-center text-[5px] text-rose-300">2px</div>
+                <button onClick={() => moveFlower(selectedId, 2, 0)} className="p-0.5 bg-white rounded border border-rose-200"><ChevronRight size={10} /></button>
                 <div />
-                <button onClick={() => moveFlower(selectedId, 0, 2)} className="p-0.5 bg-white rounded border border-stone-200"><ChevronDown size={10} /></button>
+                <button onClick={() => moveFlower(selectedId, 0, 2)} className="p-0.5 bg-white rounded border border-rose-200"><ChevronDown size={10} /></button>
                 <div />
               </div>
-              <div className="w-[1px] h-6 bg-stone-200" />
+              <div className="w-[1px] h-6 bg-rose-200" />
               <div className="flex flex-col gap-0.5">
-                <button onClick={() => zoomFlower(selectedId, 0.1)} className="p-0.5 bg-white rounded border border-stone-200"><Plus size={10} /></button>
-                <button onClick={() => zoomFlower(selectedId, -0.1)} className="p-0.5 bg-white rounded border border-stone-200"><Minus size={10} /></button>
+                <button onClick={() => zoomFlower(selectedId, 0.1)} className="p-0.5 bg-white rounded border border-rose-200"><Plus size={10} /></button>
+                <button onClick={() => zoomFlower(selectedId, -0.1)} className="p-0.5 bg-white rounded border border-rose-200"><Minus size={10} /></button>
               </div>
-              <div className="w-[1px] h-6 bg-stone-200" />
+              <div className="w-[1px] h-6 bg-rose-200" />
               <div className="flex-1 space-y-1">
                 <input 
                   type="range" min="0" max="360" step="10"
-                  className="w-full h-0.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-800"
+                  className="w-full h-0.5 bg-rose-200 rounded-lg appearance-none cursor-pointer accent-rose-800"
                   value={state.flowers.find(f => f.id === selectedId)?.rotation || 0}
                   onChange={(e) => updateFlower(selectedId, { rotation: parseInt(e.target.value) })}
                 />
                 <input 
                   type="range" min="0.5" max="2.5" step="0.2"
-                  className="w-full h-0.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-800"
+                  className="w-full h-0.5 bg-rose-200 rounded-lg appearance-none cursor-pointer accent-rose-800"
                   value={state.flowers.find(f => f.id === selectedId)?.scale || 1}
                   onChange={(e) => updateFlower(selectedId, { scale: parseFloat(e.target.value) })}
                 />
                 <input 
                   type="range" min="0.1" max="1" step="0.1"
-                  className="w-full h-0.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-800"
+                  className="w-full h-0.5 bg-rose-200 rounded-lg appearance-none cursor-pointer accent-rose-800"
                   value={state.flowers.find(f => f.id === selectedId)?.opacity ?? 1}
                   onChange={(e) => updateFlower(selectedId, { opacity: parseFloat(e.target.value) })}
                   title="Transparency"
@@ -680,7 +680,7 @@ export const Editor: React.FC = () => {
             <input 
               type="text"
               placeholder="Note..."
-              className="w-full bg-stone-50 border border-stone-100 rounded px-1.5 py-0.5 text-[9px] focus:border-stone-800 outline-none"
+              className="w-full bg-rose-50 border border-rose-100 rounded px-1.5 py-0.5 text-[9px] focus:border-rose-800 outline-none"
               value={state.flowers.find(f => f.id === selectedId)?.note || ""}
               onChange={(e) => updateFlower(selectedId, { note: e.target.value })}
             />
@@ -701,21 +701,21 @@ export const Editor: React.FC = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-[2.5rem] p-10 w-full max-w-sm shadow-2xl relative text-center border-4 border-stone-800 sketch-border sketch-shadow"
+              className="bg-white rounded-[2.5rem] p-10 w-full max-w-sm shadow-2xl relative text-center border-4 border-rose-800 sketch-border sketch-shadow"
             >
               <button 
                 onClick={() => setShowShare(false)}
-                className="absolute top-6 right-6 p-2 text-stone-300 hover:text-stone-500 transition-colors"
+                className="absolute top-6 right-6 p-2 text-rose-300 hover:text-rose-500 transition-colors"
               >
                 <X size={24} />
               </button>
               
-              <div className="w-24 h-24 bg-stone-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-stone-800 sketch-border">
-                <Send className="text-stone-800" size={40} />
+              <div className="w-24 h-24 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-rose-800 sketch-border">
+                <Send className="text-rose-800" size={40} />
               </div>
               
-              <h3 className="text-3xl font-sketch font-black text-stone-800 mb-4 tracking-tight">Send Love</h3>
-              <p className="text-stone-500 mb-6 leading-relaxed font-sketch">Your digital bouquet is ready to be delivered. Choose how you'd like to send it!</p>
+              <h3 className="text-3xl font-sketch font-black text-rose-800 mb-4 tracking-tight">Send Love</h3>
+              <p className="text-rose-500 mb-6 leading-relaxed font-sketch">Your digital bouquet is ready to be delivered. Choose how you'd like to send it!</p>
               
               <div className="space-y-6">
                 {/* QR Code Section */}
@@ -724,7 +724,7 @@ export const Editor: React.FC = () => {
                     {!showQRCode ? (
                       <button 
                         onClick={() => setShowQRCode(true)}
-                        className="text-[10px] font-sketch text-stone-400 uppercase tracking-widest hover:text-stone-800 transition-colors flex items-center gap-2 mx-auto"
+                        className="text-[10px] font-sketch text-rose-400 uppercase tracking-widest hover:text-rose-800 transition-colors flex items-center gap-2 mx-auto"
                       >
                         <Maximize2 size={12} /> Show QR Code
                       </button>
@@ -732,7 +732,7 @@ export const Editor: React.FC = () => {
                       <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
-                        className="flex flex-col items-center justify-center p-4 bg-white rounded-3xl border-2 border-stone-800 sketch-border shadow-sm"
+                        className="flex flex-col items-center justify-center p-4 bg-white rounded-3xl border-2 border-rose-800 sketch-border shadow-sm"
                       >
                         <img 
                           src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(shortUrl)}`} 
@@ -742,7 +742,7 @@ export const Editor: React.FC = () => {
                         />
                         <button 
                           onClick={() => setShowQRCode(false)}
-                          className="text-[10px] font-sketch text-stone-400 uppercase tracking-widest hover:text-stone-800 transition-colors"
+                          className="text-[10px] font-sketch text-rose-400 uppercase tracking-widest hover:text-rose-800 transition-colors"
                         >
                           Hide QR Code
                         </button>
@@ -753,7 +753,7 @@ export const Editor: React.FC = () => {
 
                 {isShortening ? (
                   <div className="py-8 flex flex-col items-center gap-4 w-full px-4">
-                    <div className="w-full h-3 bg-stone-100 rounded-full overflow-hidden sketch-border border-stone-800">
+                    <div className="w-full h-3 bg-rose-100 rounded-full overflow-hidden sketch-border border-rose-800">
                       <motion.div 
                         className={cn("h-full", currentStyle.accentBg)}
                         initial={{ width: 0 }}
@@ -761,13 +761,13 @@ export const Editor: React.FC = () => {
                         transition={{ duration: 0.2 }}
                       />
                     </div>
-                    <p className="text-sm font-sketch text-stone-500 font-bold animate-pulse">
+                    <p className="text-sm font-sketch text-rose-500 font-bold animate-pulse">
                       {shareProgress < 100 ? "Arranging your bouquet..." : "Ready!"}
                     </p>
                   </div>
                 ) : shortUrl && (
-                  <div className="bg-stone-50 p-5 rounded-3xl border-2 border-stone-800 sketch-border overflow-hidden relative">
-                    <p className="text-sm font-bold text-stone-800 truncate mb-1 pr-8">
+                  <div className="bg-rose-50 p-5 rounded-3xl border-2 border-rose-800 sketch-border overflow-hidden relative">
+                    <p className="text-sm font-bold text-rose-800 truncate mb-1 pr-8">
                       {shortUrl}
                     </p>
                     <button 
@@ -779,7 +779,7 @@ export const Editor: React.FC = () => {
                           setTimeout(() => btn.classList.add('opacity-0'), 2000);
                         }
                       }}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-800 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-rose-400 hover:text-rose-800 transition-colors"
                     >
                       <Copy size={18} />
                     </button>
@@ -802,7 +802,7 @@ export const Editor: React.FC = () => {
                       }
                     }}
                     id="copy-btn-modal"
-                    className="flex items-center justify-center gap-2 bg-stone-800 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all disabled:opacity-50 sketch-border border-stone-900"
+                    className="flex items-center justify-center gap-2 bg-rose-800 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all disabled:opacity-50 sketch-border border-rose-900"
                   >
                     <Copy size={18} />
                     <span>Copy Link</span>
@@ -826,7 +826,7 @@ export const Editor: React.FC = () => {
                         window.open(`https://wa.me/?text=${encodeURIComponent('I made this digital bouquet for you! 💐 ' + shortUrl)}`, '_blank');
                       }
                     }}
-                    className="flex items-center justify-center gap-2 bg-white text-stone-800 font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all disabled:opacity-50 sketch-border border-stone-800"
+                    className="flex items-center justify-center gap-2 bg-white text-rose-800 font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all disabled:opacity-50 sketch-border border-rose-800"
                   >
                     <Share2 size={18} />
                     <span>Share</span>
@@ -850,10 +850,10 @@ export const Editor: React.FC = () => {
       </button>
 
       {/* Footer */}
-      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-sketch text-stone-400/60 pointer-events-none whitespace-nowrap z-50 flex items-center gap-1.5">
-        <span>Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-600 underline">Muhammed Adhil</a> with Love</span>
+      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-sketch text-rose-400/60 pointer-events-none whitespace-nowrap z-50 flex items-center gap-1.5">
+        <span>Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-rose-600 underline">Muhammed Adhil</a> with Love</span>
         <span>•</span>
-        <button onClick={() => setShowHowToUse(true)} className="pointer-events-auto hover:text-stone-600 underline uppercase tracking-widest">How to use</button>
+        <button onClick={() => setShowHowToUse(true)} className="pointer-events-auto hover:text-rose-600 underline uppercase tracking-widest">How to use</button>
       </div>
 
       <AnimatePresence>

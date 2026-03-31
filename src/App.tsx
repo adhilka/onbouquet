@@ -44,10 +44,10 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 flex flex-col items-center justify-center bg-stone-50 gap-4">
+      <div className="fixed inset-0 flex flex-col items-center justify-center bg-rose-50 gap-4">
         <img src="/logo.svg" alt="OnBouquet Logo" className="w-20 h-20 animate-pulse drop-shadow-sm" />
-        <h1 className="text-2xl font-sketch font-bold text-stone-800">OnBouquet</h1>
-        <Loader2 className="w-8 h-8 text-stone-400 animate-spin" />
+        <h1 className="text-2xl font-sketch font-bold text-rose-800">OnBouquet</h1>
+        <Loader2 className="w-8 h-8 text-rose-400 animate-spin" />
       </div>
     );
   }
