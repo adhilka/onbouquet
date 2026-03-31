@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { BouquetState } from "../types";
 import { BOUQUET_STYLES } from "../constants";
 import { Flower } from "./Flower";
 import { cn } from "../lib/utils";
 import confetti from "canvas-confetti";
-import { Mail, Heart, Clock } from "lucide-react";
+import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2 } from "lucide-react";
 import { formatDistanceToNow, isAfter } from "date-fns";
+import { toPng } from "html-to-image";
 
 interface ViewerProps {
   initialState: BouquetState;
@@ -16,6 +17,11 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [timeLeft, setTimeLeft] = useState<string>("");
+  const [selectedFlowerId, setSelectedFlowerId] = useState<string | null>(null);
+  const [isLetterMinimized, setIsLetterMinimized] = useState(false);
+  const [isLetterFullScreen, setIsLetterFullScreen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const viewerRef = useRef<HTMLDivElement>(null);
 
   const currentStyle = BOUQUET_STYLES.find((s) => s.id === initialState.styleId) || BOUQUET_STYLES[0];
 
@@ -37,19 +43,74 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
     }
   }, [initialState.letter.unlockAt]);
 
+  // Set default selected flower (first one with a note)
+  useEffect(() => {
+    if (isOpen && !selectedFlowerId) {
+      const firstWithNote = initialState.flowers.find(f => f.note);
+      if (firstWithNote) {
+        setSelectedFlowerId(firstWithNote.id);
+      }
+    }
+  }, [isOpen, initialState.flowers, selectedFlowerId]);
+
   const handleOpen = () => {
     if (isLocked) return;
     setIsOpen(true);
     confetti({
-      particleCount: 100,
-      spread: 70,
+      particleCount: 150,
+      spread: 80,
       origin: { y: 0.6 },
-      colors: ["#FDA4AF", "#F472B6", "#FB7185"],
+      colors: ["#FDA4AF", "#F472B6", "#FB7185", "#E879F9"],
     });
   };
 
+  const exportRef = useRef<HTMLDivElement>(null);
+
+  const handleSaveImage = async () => {
+    if (!exportRef.current) return;
+    
+    setIsSaving(true);
+    try {
+      // Temporarily make the export container visible for capture
+      exportRef.current.style.display = 'flex';
+      
+      const dataUrl = await toPng(exportRef.current, {
+        cacheBust: true,
+        pixelRatio: 2, // Higher quality
+        style: {
+          transform: 'none',
+        }
+      });
+      
+      exportRef.current.style.display = 'none';
+      
+      const link = document.createElement('a');
+      link.download = `bouquet-from-${initialState.letter.from || 'someone'}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      console.error('Failed to save image', err);
+      if (exportRef.current) {
+        exportRef.current.style.display = 'none';
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const minX = initialState.flowers.length > 0 ? Math.min(...initialState.flowers.map(f => f.x)) : 0;
+  const maxX = initialState.flowers.length > 0 ? Math.max(...initialState.flowers.map(f => f.x)) : 0;
+  const minY = initialState.flowers.length > 0 ? Math.min(...initialState.flowers.map(f => f.y)) : 0;
+  const maxY = initialState.flowers.length > 0 ? Math.max(...initialState.flowers.map(f => f.y)) : 0;
+  
+  const flowersWidth = maxX - minX + 120;
+  const flowersHeight = maxY - minY + 120;
+
   return (
-    <div className={cn("fixed inset-0 flex flex-col items-center justify-center p-6 transition-colors duration-700", currentStyle.bgGradient, currentStyle.bgPattern)}>
+    <div 
+      ref={viewerRef}
+      className={cn("fixed inset-0 flex flex-col items-center justify-center p-6 transition-colors duration-700 overflow-hidden", currentStyle.bgGradient, currentStyle.bgPattern)}
+    >
       <AnimatePresence mode="wait">
         {!isOpen ? (
           <motion.div
@@ -57,57 +118,57 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 1.2, opacity: 0 }}
-            className="text-center space-y-8"
+            className="text-center space-y-8 relative z-10"
           >
             <div className="relative">
               <motion.div
                 animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 2, -2, 0]
+                  y: [0, -15, 0],
+                  rotate: [0, 3, -3, 0]
                 }}
                 transition={{ 
-                  duration: 4,
+                  duration: 5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="w-48 h-48 bg-white flex items-center justify-center relative z-10 cursor-pointer group sketch-border border-stone-800 sketch-shadow"
+                className="w-56 h-56 bg-white flex items-center justify-center relative z-10 cursor-pointer group sketch-border border-stone-800 sketch-shadow"
                 onClick={handleOpen}
               >
                 {isLocked ? (
-                  <Clock className="text-gray-300" size={80} />
+                  <Clock className="text-gray-300" size={100} />
                 ) : (
-                  <Mail className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={80} />
+                  <Mail className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />
                 )}
-                <div className={cn("absolute -bottom-4 -right-4 w-16 h-16 rounded-full flex items-center justify-center shadow-lg", currentStyle.accentBg)}>
-                  <Heart className="text-white fill-current" size={32} />
+                <div className={cn("absolute -bottom-6 -right-6 w-20 h-20 rounded-full flex items-center justify-center shadow-2xl", currentStyle.accentBg)}>
+                  <Heart className="text-white fill-current" size={40} />
                 </div>
               </motion.div>
-              <div className={cn("absolute inset-0 blur-3xl opacity-30 rounded-full -z-10", currentStyle.secondaryBg)} />
+              <div className={cn("absolute inset-0 blur-[100px] opacity-40 rounded-full -z-10", currentStyle.secondaryBg)} />
             </div>
 
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-gray-900">A Gift for You</h1>
-              <p className="text-gray-500">From {initialState.letter.from || "Someone Special"}</p>
+            <div className="space-y-3">
+              <h1 className="text-4xl font-bold text-stone-800 font-sketch tracking-tight">A Special Delivery</h1>
+              <p className="text-stone-500 font-medium">From {initialState.letter.from || "Someone Special"}</p>
             </div>
 
             {isLocked && (
-              <div className="bg-white/50 backdrop-blur px-6 py-3 rounded-2xl border border-white/50 shadow-sm">
-                <p className="text-sm font-medium text-gray-600">Unlocks {timeLeft}</p>
+              <div className="bg-white/60 backdrop-blur-md px-8 py-4 rounded-3xl border-2 border-stone-800/10 shadow-lg">
+                <p className="text-sm font-bold text-stone-600 uppercase tracking-widest">Unlocks {timeLeft}</p>
               </div>
             )}
 
             {!isLocked && (
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, rotate: 1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleOpen}
                 className={cn(
-                  "text-white font-bold px-10 py-4 rounded-full shadow-xl sketch-border",
+                  "text-white font-bold px-12 py-5 rounded-full shadow-2xl sketch-border text-lg tracking-wide",
                   currentStyle.accentBg,
                   currentStyle.accentBorder
                 )}
               >
-                Open Bouquet
+                Reveal Bouquet
               </motion.button>
             )}
           </motion.div>
@@ -117,65 +178,236 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="fixed inset-0 flex flex-col"
+            onClick={() => setSelectedFlowerId(null)}
           >
+            {/* Atmosphere Background Elements */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className={cn("absolute top-1/4 left-1/4 w-96 h-96 blur-[120px] opacity-20 rounded-full", currentStyle.secondaryBg)} />
+              <div className={cn("absolute bottom-1/4 right-1/4 w-96 h-96 blur-[120px] opacity-20 rounded-full", currentStyle.accentBg)} />
+            </div>
+
             {/* Flowers Canvas */}
-            <div className="flex-1 relative overflow-hidden">
-              {initialState.flowers.map((flower, i) => (
-                <motion.div
-                  key={flower.id}
-                  initial={{ opacity: 0, scale: 0, y: 50 }}
-                  animate={{ 
-                    opacity: 1, 
-                    scale: flower.scale, 
-                    y: 0,
-                    transition: { delay: i * 0.1 + 0.5 }
-                  }}
-                >
-                  <Flower instance={flower} />
-                </motion.div>
-              ))}
+            <div className="flex-1 relative overflow-visible">
+              <motion.div 
+                className="absolute inset-0"
+                animate={{ 
+                  y: [0, -10, 0],
+                }}
+                transition={{ 
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                {initialState.flowers.map((flower, i) => (
+                  <Flower 
+                    key={flower.id} 
+                    instance={flower} 
+                    showNote={selectedFlowerId === flower.id}
+                    onSelect={() => setSelectedFlowerId(flower.id)}
+                  />
+                ))}
+              </motion.div>
             </div>
 
             {/* Letter Content */}
             <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 1.5, type: "spring" }}
-              className="bg-white p-8 rounded-t-[3rem] max-w-2xl mx-auto w-full border-t-4 border-stone-800 sketch-shadow sketch-border"
+              initial={{ y: 200, opacity: 0 }}
+              animate={{ 
+                y: isLetterMinimized ? "calc(100% - 80px)" : 0, 
+                opacity: 1,
+                maxHeight: isLetterFullScreen ? "85vh" : "50vh",
+                maxWidth: isLetterFullScreen ? "100%" : "42rem"
+              }}
+              transition={{ 
+                type: "spring", 
+                damping: 25,
+                stiffness: 120,
+                mass: 0.8
+              }}
+              className={cn(
+                "bg-white/95 backdrop-blur-sm p-6 md:p-8 border-t-4 border-stone-800 sketch-shadow sketch-border relative z-50 mt-auto flex flex-col transition-all duration-500",
+                isLetterFullScreen ? "rounded-t-none" : "rounded-t-[3rem] mx-auto w-full"
+              )}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="space-y-6 max-h-[40vh] overflow-y-auto pr-2 scrollbar-hide font-sketch">
+              {/* Toggle Buttons Container */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex gap-2 z-[60]">
+                {/* Minimize Toggle */}
+                <button
+                  onClick={() => {
+                    setIsLetterMinimized(!isLetterMinimized);
+                    if (isLetterFullScreen) setIsLetterFullScreen(false);
+                  }}
+                  className="bg-white border-2 border-stone-800 rounded-full p-1 sketch-shadow hover:scale-110 transition-transform active:scale-95"
+                >
+                  {isLetterMinimized ? (
+                    <ChevronUp className="text-stone-800" size={14} />
+                  ) : (
+                    <ChevronDown className="text-stone-800" size={14} />
+                  )}
+                </button>
+
+                {/* Full Screen Toggle */}
+                {!isLetterMinimized && (
+                  <button
+                    onClick={() => setIsLetterFullScreen(!isLetterFullScreen)}
+                    className="bg-white border-2 border-stone-800 rounded-full p-1 sketch-shadow hover:scale-110 transition-transform active:scale-95"
+                  >
+                    {isLetterFullScreen ? (
+                      <Minimize2 className="text-stone-800" size={14} />
+                    ) : (
+                      <Maximize2 className="text-stone-800" size={14} />
+                    )}
+                  </button>
+                )}
+              </div>
+
+              {/* Save Image Button */}
+              {!isLetterMinimized && (
+                <button
+                  onClick={handleSaveImage}
+                  disabled={isSaving}
+                  className="absolute top-4 right-4 p-2 bg-white/50 hover:bg-white rounded-full sketch-border border-stone-800 shadow-sm transition-all active:scale-95 z-[70] save-image-btn"
+                  title="Save as Image"
+                >
+                  {isSaving ? (
+                    <Loader2 className="text-stone-800 animate-spin" size={16} />
+                  ) : (
+                    <Download className="text-stone-800" size={16} />
+                  )}
+                </button>
+              )}
+
+              <div className={cn(
+                "space-y-6 overflow-y-auto pr-2 scrollbar-hide font-sketch transition-all duration-500 flex-1",
+                isLetterMinimized ? "max-h-[0px] opacity-0 overflow-hidden" : "opacity-100"
+              )}>
                 <div className="flex justify-between items-start">
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest text-stone-400 font-bold">To</span>
-                    <h2 className="text-2xl font-bold text-stone-800">{initialState.letter.to || "You"}</h2>
+                    <span className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-black">To</span>
+                    <h2 className="text-2xl font-bold text-stone-800 mt-0.5">{initialState.letter.to || "You"}</h2>
                   </div>
-                  <Heart className={cn("fill-current", currentStyle.accentText)} size={24} />
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Heart className={cn("fill-current", currentStyle.accentText)} size={24} />
+                  </motion.div>
                 </div>
                 
-                <p className="text-stone-700 leading-relaxed text-xl italic">
-                  "{initialState.letter.content}"
-                </p>
+                <div className="relative">
+                  <div className="absolute -left-4 top-0 text-4xl text-stone-200 font-serif">“</div>
+                  <p className={cn(
+                    "text-stone-700 leading-relaxed italic relative z-10 px-2",
+                    initialState.letter.content.length > 200 ? "text-lg" : "text-xl"
+                  )}>
+                    {initialState.letter.content}
+                  </p>
+                  <div className="absolute -right-1 bottom-0 text-4xl text-stone-200 font-serif">”</div>
+                </div>
 
-                <div className="text-right">
-                  <span className="text-[10px] uppercase tracking-widest text-stone-400 font-bold">With Love,</span>
-                  <p className="text-xl font-bold text-stone-800">{initialState.letter.from || "Someone Special"}</p>
+                <div className="text-right pt-2">
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-black">With Love,</span>
+                  <p className="text-xl font-bold text-stone-800 mt-0.5">{initialState.letter.from || "Someone Special"}</p>
                 </div>
               </div>
               
-              <button 
-                onClick={() => window.location.href = window.location.origin}
-                className="mt-8 w-full py-4 bg-stone-800 text-white rounded-2xl font-bold sketch-border border-stone-900 shadow-lg active:scale-95 transition-all"
-              >
-                Create your own bouquet 💐
-              </button>
+              <div className={cn(
+                "transition-all duration-500 shrink-0",
+                isLetterMinimized ? "mt-0" : "mt-6"
+              )}>
+                <button 
+                  onClick={() => window.location.href = window.location.origin}
+                  className="w-full py-3 bg-stone-800 text-white rounded-2xl font-bold sketch-border border-stone-900 shadow-lg active:scale-95 transition-all text-sm tracking-wide"
+                >
+                  {isLetterMinimized ? "Create Bouquet 💐" : "Create your own bouquet 💐"}
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Footer */}
-      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-sketch text-stone-400/60 pointer-events-none whitespace-nowrap z-50">
-        Made By Muhammed Adhil with Love
+      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-sketch text-stone-500/40 pointer-events-none whitespace-nowrap z-[60] uppercase tracking-widest footer-text">
+        Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-500 underline">Muhammed Adhil</a> with Love
+      </div>
+
+      {/* Hidden Export Container */}
+      <div 
+        ref={exportRef}
+        className={cn(
+          "fixed top-0 left-0 w-[800px] flex flex-col items-center justify-start p-12 overflow-visible",
+          currentStyle.bgGradient, 
+          currentStyle.bgPattern
+        )}
+        style={{ display: 'none', zIndex: -9999, minHeight: '1200px' }}
+      >
+        {/* Atmosphere Background Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className={cn("absolute top-1/4 left-1/4 w-96 h-96 blur-[120px] opacity-20 rounded-full", currentStyle.secondaryBg)} />
+          <div className={cn("absolute bottom-1/4 right-1/4 w-96 h-96 blur-[120px] opacity-20 rounded-full", currentStyle.accentBg)} />
+        </div>
+
+        <div className="text-center space-y-4 pt-8 relative z-10 w-full shrink-0">
+          <h1 className="text-5xl font-bold text-stone-800 font-sketch tracking-tight">A Special Delivery</h1>
+          <p className="text-xl text-stone-500 font-medium">From {initialState.letter.from || "Someone Special"}</p>
+        </div>
+
+        {/* Flowers Canvas */}
+        <div className="relative w-full flex items-center justify-center my-12 shrink-0" style={{ minHeight: '500px' }}>
+          <div 
+            className="relative"
+            style={{ 
+              width: flowersWidth, 
+              height: flowersHeight,
+              transform: `scale(${Math.min(1, 700 / flowersWidth)})`,
+              transformOrigin: 'center center'
+            }}
+          >
+            {initialState.flowers.map((flower) => (
+              <Flower 
+                key={flower.id} 
+                instance={{...flower, x: flower.x - minX + 12, y: flower.y - minY + 12}} 
+                showNote={true}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Letter Content */}
+        <div className="bg-white/95 backdrop-blur-sm p-10 border-4 border-stone-800 sketch-shadow sketch-border relative z-50 w-full max-w-2xl rounded-[3rem] shrink-0 mb-8">
+          <div className="space-y-8 font-sketch">
+            <div className="flex justify-between items-start">
+              <div>
+                <span className="text-sm uppercase tracking-[0.2em] text-stone-400 font-black">To</span>
+                <h2 className="text-4xl font-bold text-stone-800 mt-1">{initialState.letter.to || "You"}</h2>
+              </div>
+              <Heart className={cn("fill-current", currentStyle.accentText)} size={40} />
+            </div>
+            
+            <div className="relative py-4">
+              <div className="absolute -left-4 top-0 text-6xl text-stone-200 font-serif">“</div>
+              <p className={cn(
+                "text-stone-700 leading-relaxed italic relative z-10 px-6",
+                initialState.letter.content.length > 200 ? "text-2xl" : "text-3xl"
+              )}>
+                {initialState.letter.content}
+              </p>
+              <div className="absolute -right-1 bottom-0 text-6xl text-stone-200 font-serif">”</div>
+            </div>
+
+            <div className="text-right pt-4">
+              <span className="text-sm uppercase tracking-[0.2em] text-stone-400 font-black">With Love,</span>
+              <p className="text-3xl font-bold text-stone-800 mt-1">{initialState.letter.from || "Someone Special"}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-sm font-sketch text-stone-500/60 mt-8 uppercase tracking-widest">
+          Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-500 underline">Muhammed Adhil</a> with Love
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2 } from "lucide-react";
 import { BouquetState, FlowerInstance } from "../types";
 import { FLOWER_TYPES, BOUQUET_STYLES, PRESET_LAYOUTS } from "../constants";
 import { Flower } from "./Flower";
 import { Viewer } from "./Viewer";
+import { DrawingCanvas } from "./DrawingCanvas";
 import { getShareUrl, getShortUrl } from "../utils/sharing";
 import { cn } from "../lib/utils";
 
@@ -15,13 +16,15 @@ export const Editor: React.FC = () => {
     styleId: "romantic",
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | null>(null);
+  const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | "draw" | null>(null);
   const [showShare, setShowShare] = useState(false);
+  const [showQRCode, setShowQRCode] = useState(false);
   const [shortUrl, setShortUrl] = useState<string>("");
   const [isShortening, setIsShortening] = useState(false);
 
   const handleShare = async () => {
     setShowShare(true);
+    setShowQRCode(false);
     setIsShortening(true);
     setShortUrl(""); // Clear previous URL
     let longUrl = "";
@@ -104,6 +107,21 @@ export const Editor: React.FC = () => {
     setActiveTab(null);
   };
 
+  const addCustomFlower = (dataUrl: string) => {
+    const newFlower: FlowerInstance = {
+      id: Math.random().toString(36).substr(2, 9),
+      typeId: "custom",
+      x: window.innerWidth / 2 - 50,
+      y: window.innerHeight / 2 - 50,
+      scale: 1,
+      rotation: 0,
+      customImageUrl: dataUrl,
+    };
+    setState((prev) => ({ ...prev, flowers: [...prev.flowers, newFlower] }));
+    setSelectedId(newFlower.id);
+    setActiveTab(null);
+  };
+
   const updateFlower = (id: string, updates: Partial<FlowerInstance>) => {
     setState((prev) => ({
       ...prev,
@@ -135,6 +153,18 @@ export const Editor: React.FC = () => {
     }
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      addCustomFlower(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className={cn("fixed inset-0 flex flex-col transition-colors duration-700", currentStyle.bgGradient, currentStyle.bgPattern)}>
       {/* Canvas Area - Maximum Space */}
@@ -155,6 +185,7 @@ export const Editor: React.FC = () => {
               isSelected={selectedId === flower.id}
               onSelect={() => setSelectedId(flower.id)}
               onUpdate={(updates) => updateFlower(flower.id, updates)}
+              dragConstraints={canvasRef}
             />
           ))}
         </AnimatePresence>
@@ -189,85 +220,109 @@ export const Editor: React.FC = () => {
                 ))}
               </div>
 
-              <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveTab("flowers");
-                }}
-                className={cn(
-                  "w-full py-4 rounded-2xl font-bold text-white transition-all sketch-border sketch-shadow",
-                  currentStyle.accentBg,
-                  currentStyle.accentBorder
-                )}
-              >
-                Add Flowers Manually
-              </button>
+              <div className="flex flex-col gap-3">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveTab("flowers");
+                  }}
+                  className={cn(
+                    "w-full py-4 rounded-2xl font-bold text-white transition-all sketch-border sketch-shadow",
+                    currentStyle.accentBg,
+                    currentStyle.accentBorder
+                  )}
+                >
+                  Add Flowers Manually
+                </button>
+
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveTab("draw");
+                  }}
+                  className="w-full py-4 rounded-2xl font-bold text-stone-800 bg-white/80 backdrop-blur-sm transition-all sketch-border border-stone-800 sketch-shadow hover:bg-stone-800 hover:text-white"
+                >
+                  Draw Your Own Flower
+                </button>
+              </div>
             </motion.div>
           </div>
         )}
       </div>
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-40 bg-white/50 backdrop-blur-md p-2 rounded-full sketch-border border-stone-800 shadow-xl">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40 bg-white/60 backdrop-blur-md p-1.5 rounded-full sketch-border border-stone-800 shadow-xl max-w-[95vw] overflow-x-auto scrollbar-hide">
         <button 
           onClick={() => setActiveTab(activeTab === "flowers" ? null : "flowers")}
           className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "flowers" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
               : "bg-white text-gray-600 border-stone-800"
           )}
         >
-          <Plus size={24} />
+          <Plus size={20} />
         </button>
         
         <button 
           onClick={() => setActiveTab(activeTab === "layouts" ? null : "layouts")}
           className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "layouts" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
               : "bg-white text-gray-600 border-stone-800"
           )}
         >
-          <Layout size={20} />
+          <Layout size={18} />
+        </button>
+
+        <button 
+          onClick={() => setActiveTab(activeTab === "draw" ? null : "draw")}
+          className={cn(
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            activeTab === "draw" 
+              ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
+              : "bg-white text-gray-600 border-stone-800"
+          )}
+        >
+          <PenTool size={18} />
         </button>
 
         <button 
           onClick={() => setActiveTab(activeTab === "letter" ? null : "letter")}
           className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "letter" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
               : "bg-white text-gray-600 border-stone-800"
           )}
         >
-          <Type size={20} />
+          <Type size={18} />
         </button>
 
         <button 
           onClick={() => setActiveTab(activeTab === "style" ? null : "style")}
           className={cn(
-            "w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
             activeTab === "style" 
               ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
               : "bg-white text-gray-600 border-stone-800"
           )}
         >
-          <Palette size={20} />
+          <Palette size={18} />
         </button>
 
-        <div className="w-px h-8 bg-stone-300 mx-1" />
+        <div className="w-px h-6 bg-stone-300 mx-0.5 shrink-0" />
 
         <button 
           onClick={handleShare}
           className={cn(
-            "text-white px-6 h-12 rounded-full font-bold flex items-center gap-2 active:scale-95 transition-all sketch-border",
+            "text-white px-4 h-10 rounded-full font-bold flex items-center gap-1.5 active:scale-95 transition-all sketch-border shrink-0 text-sm",
             currentStyle.accentBg,
             currentStyle.accentBorder
           )}
         >
-          <Send size={18} />
+          <Send size={16} />
           <span>Send</span>
         </button>
       </div>
@@ -279,49 +334,69 @@ export const Editor: React.FC = () => {
             initial={{ y: 100, opacity: 0, x: "-50%" }}
             animate={{ y: 0, opacity: 1, x: "-50%" }}
             exit={{ y: 100, opacity: 0, x: "-50%" }}
-            className="fixed bottom-26 left-1/2 w-[90%] max-w-md bg-white/90 backdrop-blur-xl rounded-3xl p-6 z-50 border-2 border-stone-800 sketch-border sketch-shadow"
+            className="fixed bottom-20 left-1/2 w-[95%] max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-4 z-50 border-2 border-stone-800 sketch-border sketch-shadow"
           >
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400">{activeTab}</h3>
-              <button onClick={() => setActiveTab(null)} className="text-gray-300 hover:text-gray-500"><X size={20} /></button>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{activeTab}</h3>
+              <button onClick={() => setActiveTab(null)} className="text-gray-300 hover:text-gray-500"><X size={18} /></button>
             </div>
 
+            {activeTab === "draw" && (
+              <DrawingCanvas 
+                onSave={addCustomFlower}
+                onClose={() => setActiveTab(null)}
+                accentColor={currentStyle.accentBg}
+              />
+            )}
+
             {activeTab === "flowers" && (
-              <div className="grid grid-cols-4 gap-4 max-h-[40vh] overflow-y-auto pr-2 scrollbar-hide">
+              <div className="space-y-4">
+                <div className="flex justify-center">
+                  <label className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold cursor-pointer transition-all sketch-border border-2",
+                    currentStyle.accentBg, "text-white", currentStyle.accentBorder
+                  )}>
+                    <Plus size={14} />
+                    Upload Image
+                    <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
+                  </label>
+                </div>
+                <div className="grid grid-cols-4 gap-3 max-h-[35vh] overflow-y-auto pr-1 scrollbar-hide">
                 {FLOWER_TYPES.map((type) => (
                   <button
                     key={type.id}
                     onClick={() => addFlower(type.id)}
-                    className="flex flex-col items-center gap-2 group"
+                    className="flex flex-col items-center gap-1.5 group"
                   >
-                    <div className={cn("w-full aspect-square rounded-2xl bg-gray-50 flex items-center justify-center transition-colors overflow-hidden", `group-hover:${currentStyle.secondaryBg}`)}>
+                    <div className={cn("w-full aspect-square rounded-xl bg-gray-50 flex items-center justify-center transition-colors overflow-hidden border border-stone-100", `group-hover:${currentStyle.secondaryBg}`)}>
                       {type.imageUrl ? (
                         <img 
                           src={type.imageUrl} 
                           alt={type.name} 
-                          className="w-full h-full object-contain p-2"
+                          className="w-full h-full object-contain p-1.5"
                           referrerPolicy="no-referrer"
                         />
                       ) : (
-                        <svg viewBox="0 0 100 100" className="w-10 h-10" style={{ fill: type.color }}>
+                        <svg viewBox="0 0 100 100" className="w-8 h-8" style={{ fill: type.color }}>
                           <path d={type.path} stroke="black" strokeWidth="2" />
                         </svg>
                       )}
                     </div>
-                    <span className="text-[10px] font-bold text-gray-400 truncate w-full text-center">{type.name}</span>
+                    <span className="text-[9px] font-bold text-gray-400 truncate w-full text-center">{type.name}</span>
                   </button>
                 ))}
               </div>
-            )}
+            </div>
+          )}
 
             {activeTab === "layouts" && (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {PRESET_LAYOUTS.map((layout) => (
                   <button
                     key={layout.id}
                     onClick={() => applyLayout(layout.id)}
                     className={cn(
-                      "py-4 rounded-2xl bg-gray-50 font-bold text-gray-600 transition-all text-sm",
+                      "py-3 rounded-xl bg-gray-50 font-bold text-gray-600 transition-all text-xs border border-stone-100",
                       `hover:${currentStyle.accentBg} hover:text-white`
                     )}
                   >
@@ -335,7 +410,7 @@ export const Editor: React.FC = () => {
                       setActiveTab(null);
                     }
                   }}
-                  className="py-4 rounded-2xl bg-red-50 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-all text-sm"
+                  className="py-3 rounded-xl bg-red-50 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-all text-xs border border-red-100"
                 >
                   Clear All
                 </button>
@@ -387,13 +462,13 @@ export const Editor: React.FC = () => {
             )}
 
             {activeTab === "style" && (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {BOUQUET_STYLES.map((style) => (
                   <button
                     key={style.id}
                     onClick={() => setState(prev => ({ ...prev, styleId: style.id }))}
                     className={cn(
-                      "py-4 rounded-2xl font-bold text-sm transition-all border-2",
+                      "py-3 rounded-xl font-bold text-xs transition-all border-2",
                       state.styleId === style.id 
                         ? cn(style.accentBorder, style.secondaryBg, style.secondaryText) 
                         : "border-transparent bg-gray-50 text-gray-500"
@@ -458,6 +533,13 @@ export const Editor: React.FC = () => {
                   value={state.flowers.find(f => f.id === selectedId)?.scale || 1}
                   onChange={(e) => updateFlower(selectedId, { scale: parseFloat(e.target.value) })}
                 />
+                <input 
+                  type="range" min="0.1" max="1" step="0.1"
+                  className="w-full h-0.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-800"
+                  value={state.flowers.find(f => f.id === selectedId)?.opacity ?? 1}
+                  onChange={(e) => updateFlower(selectedId, { opacity: parseFloat(e.target.value) })}
+                  title="Transparency"
+                />
               </div>
             </div>
 
@@ -504,19 +586,35 @@ export const Editor: React.FC = () => {
               <div className="space-y-6">
                 {/* QR Code Section */}
                 {shortUrl && !isShortening && (
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="flex flex-col items-center justify-center p-4 bg-white rounded-3xl border-2 border-stone-800 sketch-border shadow-sm"
-                  >
-                    <img 
-                      src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(shortUrl)}`} 
-                      alt="Bouquet QR Code"
-                      className="w-32 h-32 mb-2"
-                      referrerPolicy="no-referrer"
-                    />
-                    <p className="text-[10px] font-sketch text-stone-400 uppercase tracking-widest">Scan to open</p>
-                  </motion.div>
+                  <div className="space-y-3">
+                    {!showQRCode ? (
+                      <button 
+                        onClick={() => setShowQRCode(true)}
+                        className="text-[10px] font-sketch text-stone-400 uppercase tracking-widest hover:text-stone-800 transition-colors flex items-center gap-2 mx-auto"
+                      >
+                        <Maximize2 size={12} /> Show QR Code
+                      </button>
+                    ) : (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className="flex flex-col items-center justify-center p-4 bg-white rounded-3xl border-2 border-stone-800 sketch-border shadow-sm"
+                      >
+                        <img 
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(shortUrl)}`} 
+                          alt="Bouquet QR Code"
+                          className="w-32 h-32 mb-2"
+                          referrerPolicy="no-referrer"
+                        />
+                        <button 
+                          onClick={() => setShowQRCode(false)}
+                          className="text-[10px] font-sketch text-stone-400 uppercase tracking-widest hover:text-stone-800 transition-colors"
+                        >
+                          Hide QR Code
+                        </button>
+                      </motion.div>
+                    )}
+                  </div>
                 )}
 
                 {isShortening ? (
@@ -610,7 +708,7 @@ export const Editor: React.FC = () => {
 
       {/* Footer */}
       <div className="fixed bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-sketch text-stone-400/60 pointer-events-none whitespace-nowrap z-50">
-        Made By Muhammed Adhil with Love
+        Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-600 underline">Muhammed Adhil</a> with Love
       </div>
     </div>
   );

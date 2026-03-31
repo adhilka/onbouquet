@@ -84,7 +84,7 @@ export const FLOWER_TYPES: FlowerType[] = [
     name: "Custom Lotus",
     color: "#D946EF",
     path: "",
-    imageUrl: "/flowers/custom-lotus.png",
+    imageUrl: "https://i.ibb.co/zWk432qV/1000094564-removebg-preview.png",
   },
 ];
 

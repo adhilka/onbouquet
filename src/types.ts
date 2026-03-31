@@ -5,7 +5,9 @@ export interface FlowerInstance {
   y: number;
   scale: number;
   rotation: number;
+  opacity?: number;
   note?: string;
+  customImageUrl?: string;
 }
 
 export interface BouquetState {
