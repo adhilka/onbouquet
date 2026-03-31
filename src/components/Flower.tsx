@@ -118,15 +118,15 @@ export const Flower: React.FC<FlowerProps> = ({
             initial={{ opacity: 0, y: 10, scale: 0.8, x: "-50%" }}
             animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
             exit={{ opacity: 0, scale: 0.8, x: "-50%" }}
-            className="absolute -top-16 left-1/2 bg-white px-4 py-2 rounded-2xl text-xs font-sketch shadow-xl whitespace-nowrap pointer-events-none border-2 border-stone-800 sketch-border z-50"
+            className="absolute -top-12 left-1/2 bg-white px-3 py-1.5 rounded-xl text-[10px] font-sketch shadow-xl whitespace-nowrap pointer-events-none border-2 border-stone-800 sketch-border z-50"
             style={{ 
-              boxShadow: '6px 6px 0px rgba(0,0,0,0.1)',
+              boxShadow: '4px 4px 0px rgba(0,0,0,0.1)',
               transformOrigin: "bottom center",
               scale: 1 / instance.scale // Counteract flower scale to keep text readable
             }}
           >
             {instance.note}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-stone-800 rotate-45" />
+            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white border-r-2 border-b-2 border-stone-800 rotate-45" />
           </motion.div>
         )}
       </AnimatePresence>

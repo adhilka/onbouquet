@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2 } from "lucide-react";
+import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2, Mail, Heart, Gift, Sparkles } from "lucide-react";
 import { BouquetState, FlowerInstance } from "../types";
 import { FLOWER_TYPES, BOUQUET_STYLES, PRESET_LAYOUTS } from "../constants";
 import { Flower } from "./Flower";
 import { Viewer } from "./Viewer";
 import { DrawingCanvas } from "./DrawingCanvas";
+import { HowToUse } from "./HowToUse";
 import { getShareUrl, getShortUrl } from "../utils/sharing";
 import { cn } from "../lib/utils";
 
@@ -14,29 +15,48 @@ export const Editor: React.FC = () => {
     flowers: [],
     letter: { to: "", from: "", content: "" },
     styleId: "romantic",
+    revealConfig: { title: "A Special Delivery", subtitle: "Tap to open" }
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | "draw" | null>(null);
+  const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | "draw" | "reveal" | null>(null);
   const [showShare, setShowShare] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
+  const [showHowToUse, setShowHowToUse] = useState(false);
   const [shortUrl, setShortUrl] = useState<string>("");
   const [isShortening, setIsShortening] = useState(false);
+  const [shareProgress, setShareProgress] = useState(0);
 
   const handleShare = async () => {
     setShowShare(true);
     setShowQRCode(false);
     setIsShortening(true);
+    setShareProgress(0);
     setShortUrl(""); // Clear previous URL
+
+    // Simulate progress
+    const progressInterval = setInterval(() => {
+      setShareProgress(prev => {
+        // Slow down as it gets closer to 90
+        const increment = Math.max(1, (90 - prev) * 0.1);
+        return Math.min(prev + increment, 90);
+      });
+    }, 100);
+
     let longUrl = "";
     try {
       longUrl = getShareUrl(state);
       const short = await getShortUrl(longUrl);
-      setShortUrl(short);
+      setShareProgress(100);
+      setTimeout(() => {
+        setShortUrl(short);
+        setIsShortening(false);
+      }, 400); // small delay to show 100%
     } catch (error) {
       console.error("Error in handleShare:", error);
       if (longUrl) setShortUrl(longUrl);
-    } finally {
       setIsShortening(false);
+    } finally {
+      clearInterval(progressInterval);
     }
   };
   const [isPreview, setIsPreview] = useState(false);
@@ -223,15 +243,19 @@ export const Editor: React.FC = () => {
         </AnimatePresence>
         
         {state.flowers.length === 0 && !activeTab && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center px-12 text-center z-10">
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-12 text-center z-10 pb-32">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="max-w-xs space-y-8"
             >
+              <div className="flex flex-col items-center">
+                <img src="/logo.svg" alt="OnBouquet Logo" className="w-16 h-16 drop-shadow-sm" />
+              </div>
+
               <div className="space-y-2">
-                <p className="text-2xl font-sketch font-bold text-stone-800">Start your bouquet</p>
-                <p className="text-stone-500 font-sketch italic">Choose a layout to begin, or tap + to add flowers manually</p>
+                <p className="text-xl font-sketch font-bold text-stone-800">Start your bouquet</p>
+                <p className="text-stone-500 font-sketch italic text-sm">Choose a layout to begin, or tap + to add flowers manually</p>
               </div>
               
               <div className="grid grid-cols-2 gap-3">
@@ -276,6 +300,17 @@ export const Editor: React.FC = () => {
                 >
                   Draw Your Own Flower
                 </button>
+                <div className="text-center mt-2">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowHowToUse(true);
+                    }} 
+                    className="text-[10px] text-stone-500 hover:text-stone-800 underline uppercase tracking-widest font-bold transition-colors"
+                  >
+                    How to use
+                  </button>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -344,18 +379,29 @@ export const Editor: React.FC = () => {
           <Palette size={18} />
         </button>
 
+        <button 
+          onClick={() => setActiveTab(activeTab === "reveal" ? null : "reveal")}
+          className={cn(
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            activeTab === "reveal" 
+              ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
+              : "bg-white text-gray-600 border-stone-800"
+          )}
+        >
+          <MessageSquare size={18} />
+        </button>
+
         <div className="w-px h-6 bg-stone-300 mx-0.5 shrink-0" />
 
         <button 
           onClick={handleShare}
           className={cn(
-            "text-white px-4 h-10 rounded-full font-bold flex items-center gap-1.5 active:scale-95 transition-all sketch-border shrink-0 text-sm",
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border text-white",
             currentStyle.accentBg,
             currentStyle.accentBorder
           )}
         >
-          <Send size={16} />
-          <span>Send</span>
+          <Send size={18} className="ml-0.5" />
         </button>
       </div>
 
@@ -511,6 +557,62 @@ export const Editor: React.FC = () => {
                 ))}
               </div>
             )}
+
+            {activeTab === "reveal" && (
+              <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-1 scrollbar-hide">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Reveal Title</label>
+                  <input
+                    placeholder="A Special Delivery"
+                    className={cn("w-full bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none font-sketch", `focus:ring-2 focus:${currentStyle.secondaryBg.replace('bg-', 'ring-')}`)}
+                    value={state.revealConfig?.title || ""}
+                    onChange={(e) => setState(prev => ({ ...prev, revealConfig: { ...prev.revealConfig, title: e.target.value } as any }))}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Reveal Subtitle</label>
+                  <input
+                    placeholder={`From ${state.letter.from || "Someone Special"}`}
+                    className={cn("w-full bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none font-sketch", `focus:ring-2 focus:${currentStyle.secondaryBg.replace('bg-', 'ring-')}`)}
+                    value={state.revealConfig?.subtitle || ""}
+                    onChange={(e) => setState(prev => ({ ...prev, revealConfig: { ...prev.revealConfig, subtitle: e.target.value } as any }))}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Button Text</label>
+                  <input
+                    placeholder="Reveal Bouquet"
+                    className={cn("w-full bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none font-sketch", `focus:ring-2 focus:${currentStyle.secondaryBg.replace('bg-', 'ring-')}`)}
+                    value={state.revealConfig?.buttonText || ""}
+                    onChange={(e) => setState(prev => ({ ...prev, revealConfig: { ...prev.revealConfig, buttonText: e.target.value } as any }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-gray-400 uppercase ml-1">Center Icon</label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[
+                      { id: "mail", icon: Mail },
+                      { id: "heart", icon: Heart },
+                      { id: "gift", icon: Gift },
+                      { id: "sparkles", icon: Sparkles }
+                    ].map(({ id, icon: Icon }) => (
+                      <button
+                        key={id}
+                        onClick={() => setState(prev => ({ ...prev, revealConfig: { ...prev.revealConfig, icon: id as any } as any }))}
+                        className={cn(
+                          "py-3 rounded-xl flex items-center justify-center transition-all border-2",
+                          (state.revealConfig?.icon || "mail") === id
+                            ? cn(currentStyle.accentBorder, currentStyle.secondaryBg, currentStyle.secondaryText)
+                            : "border-transparent bg-gray-50 text-gray-500 hover:bg-gray-100"
+                        )}
+                      >
+                        <Icon size={20} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -650,9 +752,18 @@ export const Editor: React.FC = () => {
                 )}
 
                 {isShortening ? (
-                  <div className="py-8 flex flex-col items-center gap-3">
-                    <div className={cn("w-10 h-10 border-4 border-stone-100 rounded-full animate-spin", currentStyle.accentBorder.replace('border-', 'border-t-'))} />
-                    <p className="text-sm font-sketch text-stone-500">Creating your link...</p>
+                  <div className="py-8 flex flex-col items-center gap-4 w-full px-4">
+                    <div className="w-full h-3 bg-stone-100 rounded-full overflow-hidden sketch-border border-stone-800">
+                      <motion.div 
+                        className={cn("h-full", currentStyle.accentBg)}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${shareProgress}%` }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    </div>
+                    <p className="text-sm font-sketch text-stone-500 font-bold animate-pulse">
+                      {shareProgress < 100 ? "Arranging your bouquet..." : "Ready!"}
+                    </p>
                   </div>
                 ) : shortUrl && (
                   <div className="bg-stone-50 p-5 rounded-3xl border-2 border-stone-800 sketch-border overflow-hidden relative">
@@ -739,9 +850,15 @@ export const Editor: React.FC = () => {
       </button>
 
       {/* Footer */}
-      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-sketch text-stone-400/60 pointer-events-none whitespace-nowrap z-50">
-        Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-600 underline">Muhammed Adhil</a> with Love
+      <div className="fixed bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-sketch text-stone-400/60 pointer-events-none whitespace-nowrap z-50 flex items-center gap-1.5">
+        <span>Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-600 underline">Muhammed Adhil</a> with Love</span>
+        <span>•</span>
+        <button onClick={() => setShowHowToUse(true)} className="pointer-events-auto hover:text-stone-600 underline uppercase tracking-widest">How to use</button>
       </div>
+
+      <AnimatePresence>
+        {showHowToUse && <HowToUse onClose={() => setShowHowToUse(false)} />}
+      </AnimatePresence>
     </div>
   );
 };

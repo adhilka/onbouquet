@@ -19,6 +19,12 @@ export interface BouquetState {
     unlockAt?: string; // ISO string
   };
   styleId: string;
+  revealConfig?: {
+    title: string;
+    subtitle: string;
+    buttonText?: string;
+    icon?: "mail" | "heart" | "gift" | "sparkles";
+  };
 }
 
 export interface FlowerType {

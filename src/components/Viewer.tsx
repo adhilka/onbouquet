@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "motion/react";
 import { BouquetState } from "../types";
 import { BOUQUET_STYLES } from "../constants";
 import { Flower } from "./Flower";
+import { HowToUse } from "./HowToUse";
 import { cn } from "../lib/utils";
 import confetti from "canvas-confetti";
-import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2 } from "lucide-react";
+import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles } from "lucide-react";
 import { formatDistanceToNow, isAfter } from "date-fns";
 import { toPng } from "html-to-image";
 
@@ -21,6 +22,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
   const [isLetterMinimized, setIsLetterMinimized] = useState(false);
   const [isLetterFullScreen, setIsLetterFullScreen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [showHowToUse, setShowHowToUse] = useState(false);
   const viewerRef = useRef<HTMLDivElement>(null);
 
   const currentStyle = BOUQUET_STYLES.find((s) => s.id === initialState.styleId) || BOUQUET_STYLES[0];
@@ -77,6 +79,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
         pixelRatio: 2, // Higher quality
+        backgroundColor: '#ffffff',
         style: {
           transform: 'none',
         }
@@ -137,7 +140,12 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                 {isLocked ? (
                   <Clock className="text-gray-300" size={100} />
                 ) : (
-                  <Mail className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />
+                  <>
+                    {initialState.revealConfig?.icon === "heart" && <Heart className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
+                    {initialState.revealConfig?.icon === "gift" && <Gift className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
+                    {initialState.revealConfig?.icon === "sparkles" && <Sparkles className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
+                    {(!initialState.revealConfig?.icon || initialState.revealConfig?.icon === "mail") && <Mail className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
+                  </>
                 )}
                 <div className={cn("absolute -bottom-6 -right-6 w-20 h-20 rounded-full flex items-center justify-center shadow-2xl", currentStyle.accentBg)}>
                   <Heart className="text-white fill-current" size={40} />
@@ -147,8 +155,8 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
             </div>
 
             <div className="space-y-3">
-              <h1 className="text-4xl font-bold text-stone-800 font-sketch tracking-tight">A Special Delivery</h1>
-              <p className="text-stone-500 font-medium">From {initialState.letter.from || "Someone Special"}</p>
+              <h1 className="text-4xl font-bold text-stone-800 font-sketch tracking-tight">{initialState.revealConfig?.title || "A Special Delivery"}</h1>
+              <p className="text-stone-500 font-medium">{initialState.revealConfig?.subtitle || `From ${initialState.letter.from || "Someone Special"}`}</p>
             </div>
 
             {isLocked && (
@@ -168,7 +176,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                   currentStyle.accentBorder
                 )}
               >
-                Reveal Bouquet
+                {initialState.revealConfig?.buttonText || "Reveal Bouquet"}
               </motion.button>
             )}
           </motion.div>
@@ -330,9 +338,15 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
       </AnimatePresence>
 
       {/* Footer */}
-      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-sketch text-stone-500/40 pointer-events-none whitespace-nowrap z-[60] uppercase tracking-widest footer-text">
-        Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-500 underline">Muhammed Adhil</a> with Love
+      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 text-[10px] font-sketch text-stone-500/40 pointer-events-none whitespace-nowrap z-[60] uppercase tracking-widest footer-text flex items-center gap-1.5">
+        <span>Made By <a href="https://instagram.com/axhilxif" target="_blank" rel="noopener noreferrer" className="pointer-events-auto hover:text-stone-500 underline">Muhammed Adhil</a> with Love</span>
+        <span>•</span>
+        <button onClick={() => setShowHowToUse(true)} className="pointer-events-auto hover:text-stone-500 underline uppercase tracking-widest">How to use</button>
       </div>
+
+      <AnimatePresence>
+        {showHowToUse && <HowToUse onClose={() => setShowHowToUse(false)} />}
+      </AnimatePresence>
 
       {/* Hidden Export Container */}
       <div 
@@ -351,8 +365,8 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
         </div>
 
         <div className="text-center space-y-4 pt-8 relative z-10 w-full shrink-0">
-          <h1 className="text-5xl font-bold text-stone-800 font-sketch tracking-tight">A Special Delivery</h1>
-          <p className="text-xl text-stone-500 font-medium">From {initialState.letter.from || "Someone Special"}</p>
+          <h1 className="text-5xl font-bold text-stone-800 font-sketch tracking-tight">{initialState.revealConfig?.title || "A Special Delivery"}</h1>
+          <p className="text-xl text-stone-500 font-medium">{initialState.revealConfig?.subtitle || `From ${initialState.letter.from || "Someone Special"}`}</p>
         </div>
 
         {/* Flowers Canvas */}

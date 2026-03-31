@@ -1,20 +1,7 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# <img src="./public/logo.svg" width="40" height="40" alt="OnBouquet Logo" /> OnBouquet
 
-# Run and deploy your AI Studio app
+Craft, personalize, and share beautiful digital bouquets with heartfelt, timed letters.
 
-This contains everything you need to run your app locally.
+## Description
 
-View your app in AI Studio: https://ai.studio/apps/272191df-ae3c-403a-bc1b-bbbf69eecd8f
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**OnBouquet** is a delightful digital gifting experience that lets you design beautiful, hand-drawn style flower arrangements. Whether you're celebrating a special occasion or just want to brighten someone's day, OnBouquet allows you to arrange custom flowers, attach a personalized letter, and even set a specific "unlock time" for your message. With its charming sketchy aesthetic and seamless sharing capabilities, it's the perfect way to send love, appreciation, and a simple smile across the digital distance.
