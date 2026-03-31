@@ -165,7 +165,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({ onSave, onClose, a
     if (!tempCtx) return;
 
     tempCtx.drawImage(canvas, minX, minY, width, height, 0, 0, width, height);
-    onSave(tempCanvas.toDataURL("image/png"));
+    onSave(tempCanvas.toDataURL("image/webp", 0.8));
   };
 
   const handleDownload = () => {

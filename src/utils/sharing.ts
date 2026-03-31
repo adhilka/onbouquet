@@ -1,7 +1,58 @@
 import LZString from "lz-string";
 import { BouquetState } from "../types";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import { doc, setDoc, getDoc, collection } from "firebase/firestore";
+
+enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string;
+    email?: string | null;
+    emailVerified?: boolean;
+    isAnonymous?: boolean;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId: string;
+      displayName: string | null;
+      email: string | null;
+      photoUrl: string | null;
+    }[];
+  }
+}
+
+function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo: auth.currentUser?.providerData.map(provider => ({
+        providerId: provider.providerId,
+        displayName: provider.displayName,
+        email: provider.email,
+        photoUrl: provider.photoURL
+      })) || []
+    },
+    operationType,
+    path
+  }
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
 
 export function encodeBouquet(state: BouquetState): string {
   const json = JSON.stringify(state);
@@ -34,7 +85,7 @@ export async function getShortUrl(longUrl: string): Promise<string> {
     url.searchParams.set("s", shortId);
     return url.toString();
   } catch (e) {
-    console.error("Failed to create short link in Firestore", e);
+    handleFirestoreError(e, OperationType.WRITE, "shortLinks");
     return longUrl;
   }
 }
@@ -49,7 +100,7 @@ export async function resolveShortLink(shortId: string): Promise<string | null> 
     }
     return null;
   } catch (e) {
-    console.error("Failed to resolve short link from Firestore", e);
+    handleFirestoreError(e, OperationType.GET, "shortLinks");
     return null;
   }
 }

@@ -10,7 +10,7 @@ service cloud.firestore {
       return data.keys().hasAll(['longUrl', 'createdAt']) &&
              data.longUrl is string &&
              data.longUrl.size() > 0 &&
-             data.longUrl.size() < 10000 &&
+             data.longUrl.size() < 1000000 &&
              data.createdAt is string;
     }
 
