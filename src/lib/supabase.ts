@@ -21,9 +21,11 @@ export const supabase = createClient(
 export const storage = {
   /**
    * Upload a file to a bucket
-   * @param bucket The name of the bucket
+   * @param bucket The name of the bucket (e.g., 'bouquets')
    * @param path The path within the bucket
    * @param file The file object or blob
+   * 
+   * NOTE: You must create the bucket in the Supabase Dashboard first.
    */
   async upload(bucket: string, path: string, file: File | Blob) {
     const { data, error } = await supabase.storage

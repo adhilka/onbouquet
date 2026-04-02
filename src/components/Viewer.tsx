@@ -7,7 +7,7 @@ import { Butterfly } from "./Butterfly";
 import { HowToUse } from "./HowToUse";
 import { cn } from "../lib/utils";
 import confetti from "canvas-confetti";
-import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles } from "lucide-react";
+import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles, Mic } from "lucide-react";
 import { formatDistanceToNow, isAfter } from "date-fns";
 import { toPng } from "html-to-image";
 
@@ -323,6 +323,16 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                   <span className="text-[10px] uppercase tracking-[0.2em] text-rose-400 font-black">With Love,</span>
                   <p className="text-xl font-bold text-rose-800 mt-0.5">{initialState.letter.from || "Someone Special"}</p>
                 </div>
+
+                {initialState.voiceUrl && (
+                  <div className="pt-4 border-t border-rose-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Mic size={14} className="text-rose-400" />
+                      <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest">Voice Message</span>
+                    </div>
+                    <audio src={initialState.voiceUrl} controls className="w-full h-10" />
+                  </div>
+                )}
               </div>
               
               <div className={cn(
@@ -426,6 +436,13 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
               <span className="text-sm uppercase tracking-[0.2em] text-rose-400 font-black">With Love,</span>
               <p className="text-3xl font-bold text-rose-800 mt-1">{initialState.letter.from || "Someone Special"}</p>
             </div>
+
+            {initialState.voiceUrl && (
+              <div className="pt-6 border-t-2 border-rose-100 flex items-center gap-3">
+                <Mic size={24} className="text-rose-400" />
+                <span className="text-sm font-bold text-rose-400 uppercase tracking-widest">Includes Voice Message</span>
+              </div>
+            )}
           </div>
         </div>
 

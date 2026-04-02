@@ -5,6 +5,7 @@ import { BouquetState, FlowerInstance, ButterflyInstance } from "../types";
 import { FLOWER_TYPES, BOUQUET_STYLES, PRESET_LAYOUTS, BUTTERFLY_COLORS } from "../constants";
 import { Flower } from "./Flower";
 import { Butterfly } from "./Butterfly";
+import { VoiceRecorder } from "./VoiceRecorder";
 import { Viewer } from "./Viewer";
 import { DrawingCanvas } from "./DrawingCanvas";
 import { HowToUse } from "./HowToUse";
@@ -628,6 +629,12 @@ export const Editor: React.FC = () => {
                     onChange={(e) => setState(prev => ({ ...prev, letter: { ...prev.letter, unlockAt: e.target.value } }))}
                   />
                 </div>
+                <VoiceRecorder 
+                  onVoiceUpload={(url) => setState(prev => ({ ...prev, voiceUrl: url }))}
+                  currentVoiceUrl={state.voiceUrl}
+                  accentColor={currentStyle.accentBg}
+                  showToast={showToast}
+                />
               </div>
             )}
 

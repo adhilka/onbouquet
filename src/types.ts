@@ -30,6 +30,7 @@ export interface BouquetState {
     content: string;
     unlockAt?: string; // ISO string
   };
+  voiceUrl?: string;
   styleId: string;
   revealConfig?: {
     title: string;

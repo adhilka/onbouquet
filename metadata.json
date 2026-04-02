@@ -1,5 +1,5 @@
 {
   "name": "OnBouquet",
   "description": "Craft, personalize, and share beautiful digital bouquets with heartfelt, timed letters.",
-  "requestFramePermissions": []
+  "requestFramePermissions": ["microphone"]
 }
