@@ -8,10 +8,22 @@ export interface FlowerInstance {
   opacity?: number;
   note?: string;
   customImageUrl?: string;
+  zIndex?: number;
+}
+
+export interface ButterflyInstance {
+  id: string;
+  x: number;
+  y: number;
+  scale: number;
+  rotation: number;
+  color: string;
+  speed: number;
 }
 
 export interface BouquetState {
   flowers: FlowerInstance[];
+  butterflies?: ButterflyInstance[];
   letter: {
     to: string;
     from: string;

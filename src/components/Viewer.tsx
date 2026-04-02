@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { BouquetState } from "../types";
 import { BOUQUET_STYLES } from "../constants";
 import { Flower } from "./Flower";
+import { Butterfly } from "./Butterfly";
 import { HowToUse } from "./HowToUse";
 import { cn } from "../lib/utils";
 import confetti from "canvas-confetti";
@@ -215,6 +216,9 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                     onSelect={() => setSelectedFlowerId(flower.id)}
                   />
                 ))}
+                {initialState.butterflies?.map((butterfly) => (
+                  <Butterfly key={butterfly.id} instance={butterfly} />
+                ))}
               </motion.div>
             </div>
 
@@ -385,6 +389,12 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                 key={flower.id} 
                 instance={{...flower, x: flower.x - minX + 12, y: flower.y - minY + 12}} 
                 showNote={true}
+              />
+            ))}
+            {initialState.butterflies?.map((butterfly) => (
+              <Butterfly 
+                key={butterfly.id} 
+                instance={{...butterfly, x: butterfly.x - minX + 12, y: butterfly.y - minY + 12}} 
               />
             ))}
           </div>

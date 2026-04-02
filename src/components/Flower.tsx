@@ -50,6 +50,7 @@ export const Flower: React.FC<FlowerProps> = ({
         y: instance.y,
         rotate: instance.rotation,
         scale: instance.scale,
+        zIndex: instance.zIndex || 0,
         cursor: isEditing ? (isSelected ? "grabbing" : "grab") : "default",
         userSelect: "none",
         touchAction: "none",

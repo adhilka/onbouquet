@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2, Mail, Heart, Gift, Sparkles } from "lucide-react";
-import { BouquetState, FlowerInstance } from "../types";
-import { FLOWER_TYPES, BOUQUET_STYLES, PRESET_LAYOUTS } from "../constants";
+import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2, Mail, Heart, Gift, Sparkles, Layers, Bug } from "lucide-react";
+import { BouquetState, FlowerInstance, ButterflyInstance } from "../types";
+import { FLOWER_TYPES, BOUQUET_STYLES, PRESET_LAYOUTS, BUTTERFLY_COLORS } from "../constants";
 import { Flower } from "./Flower";
+import { Butterfly } from "./Butterfly";
 import { Viewer } from "./Viewer";
 import { DrawingCanvas } from "./DrawingCanvas";
 import { HowToUse } from "./HowToUse";
@@ -13,12 +14,13 @@ import { cn } from "../lib/utils";
 export const Editor: React.FC = () => {
   const [state, setState] = useState<BouquetState>({
     flowers: [],
+    butterflies: [],
     letter: { to: "", from: "", content: "" },
     styleId: "romantic",
     revealConfig: { title: "A Special Delivery", subtitle: "Tap to open" }
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | "draw" | "reveal" | null>(null);
+  const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | "draw" | "reveal" | "butterflies" | null>(null);
   const [showShare, setShowShare] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
   const [showHowToUse, setShowHowToUse] = useState(false);
@@ -92,6 +94,31 @@ export const Editor: React.FC = () => {
       });
       setActiveTab(null);
     }
+  };
+
+  const addButterfly = () => {
+    const newButterfly: ButterflyInstance = {
+      id: Math.random().toString(36).substr(2, 9),
+      x: Math.random() * (window.innerWidth - 100) + 50,
+      y: Math.random() * (window.innerHeight - 100) + 50,
+      scale: 0.5 + Math.random() * 0.5,
+      rotation: Math.random() * 360,
+      color: BUTTERFLY_COLORS[Math.floor(Math.random() * BUTTERFLY_COLORS.length)],
+      speed: 0.5 + Math.random() * 1.5,
+    };
+    setState((prev) => ({ ...prev, butterflies: [...(prev.butterflies || []), newButterfly] }));
+  };
+
+  const updateZIndex = (id: string, direction: "up" | "down") => {
+    setState((prev) => {
+      const flower = prev.flowers.find(f => f.id === id);
+      if (!flower) return prev;
+      const currentZ = flower.zIndex || 0;
+      return {
+        ...prev,
+        flowers: prev.flowers.map(f => f.id === id ? { ...f, zIndex: currentZ + (direction === "up" ? 1 : -1) } : f)
+      };
+    });
   };
 
   const currentStyle = BOUQUET_STYLES.find((s) => s.id === state.styleId) || BOUQUET_STYLES[0];
@@ -240,6 +267,9 @@ export const Editor: React.FC = () => {
               dragConstraints={canvasRef}
             />
           ))}
+          {state.butterflies?.map((butterfly) => (
+            <Butterfly key={butterfly.id} instance={butterfly} />
+          ))}
         </AnimatePresence>
         
         {state.flowers.length === 0 && !activeTab && (
@@ -320,6 +350,19 @@ export const Editor: React.FC = () => {
       {/* Floating Action Buttons */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-40 bg-white/60 backdrop-blur-md p-1.5 rounded-full sketch-border border-rose-800 shadow-xl max-w-[95vw] overflow-x-auto scrollbar-hide">
         <button 
+          onClick={handleShare}
+          className={cn(
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border text-white",
+            currentStyle.accentBg,
+            currentStyle.accentBorder
+          )}
+        >
+          <Send size={18} className="ml-0.5" />
+        </button>
+
+        <div className="w-px h-6 bg-rose-300 mx-0.5 shrink-0" />
+
+        <button 
           onClick={() => setActiveTab(activeTab === "flowers" ? null : "flowers")}
           className={cn(
             "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
@@ -353,6 +396,18 @@ export const Editor: React.FC = () => {
           )}
         >
           <PenTool size={18} />
+        </button>
+
+        <button 
+          onClick={() => setActiveTab(activeTab === "butterflies" ? null : "butterflies")}
+          className={cn(
+            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border",
+            activeTab === "butterflies" 
+              ? cn(currentStyle.accentBg, "text-white", currentStyle.accentBorder) 
+              : "bg-white text-rose-600 border-rose-800"
+          )}
+        >
+          <Bug size={18} />
         </button>
 
         <button 
@@ -390,19 +445,6 @@ export const Editor: React.FC = () => {
         >
           <MessageSquare size={18} />
         </button>
-
-        <div className="w-px h-6 bg-rose-300 mx-0.5 shrink-0" />
-
-        <button 
-          onClick={handleShare}
-          className={cn(
-            "w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-90 sketch-border text-white",
-            currentStyle.accentBg,
-            currentStyle.accentBorder
-          )}
-        >
-          <Send size={18} className="ml-0.5" />
-        </button>
       </div>
 
       {/* Floating Toolbars */}
@@ -418,6 +460,29 @@ export const Editor: React.FC = () => {
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{activeTab}</h3>
               <button onClick={() => setActiveTab(null)} className="text-gray-300 hover:text-gray-500"><X size={18} /></button>
             </div>
+
+            {activeTab === "butterflies" && (
+              <div className="space-y-4">
+                <button
+                  onClick={addButterfly}
+                  className={cn(
+                    "w-full py-3 rounded-xl font-bold text-white transition-all sketch-border",
+                    currentStyle.accentBg,
+                    currentStyle.accentBorder
+                  )}
+                >
+                  Add Fluttering Butterfly
+                </button>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => setState(prev => ({ ...prev, butterflies: [] }))}
+                    className="py-2 rounded-xl bg-red-50 text-red-500 font-bold text-xs border border-red-100"
+                  >
+                    Remove All Butterflies
+                  </button>
+                </div>
+              </div>
+            )}
 
             {activeTab === "draw" && (
               <DrawingCanvas 
@@ -629,6 +694,9 @@ export const Editor: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex gap-1.5 items-center">
                 <button onClick={() => removeFlower(selectedId)} className="p-1 text-red-400 hover:text-red-500"><Trash2 size={12} /></button>
+                <div className="w-[1px] h-3 bg-rose-100" />
+                <button onClick={() => updateZIndex(selectedId, "up")} className="p-1 text-stone-400 hover:text-stone-800" title="Bring Forward"><Layers size={12} className="rotate-180" /></button>
+                <button onClick={() => updateZIndex(selectedId, "down")} className="p-1 text-stone-400 hover:text-stone-800" title="Send Backward"><Layers size={12} /></button>
                 <div className="w-[1px] h-3 bg-rose-100" />
                 <span className="text-[7px] font-bold text-rose-300 uppercase">Edit</span>
               </div>

@@ -222,6 +222,14 @@ export const PRESET_LAYOUTS = [
   }
 ];
 
+export const BUTTERFLY_COLORS = [
+  "#FF69B4", // Hot Pink
+  "#FFD700", // Gold
+  "#87CEEB", // Sky Blue
+  "#9370DB", // Medium Purple
+  "#FF4500", // Orange Red
+];
+
 export const BOUQUET_STYLES: BouquetStyle[] = [
   {
     id: "sketchy",
