@@ -1,16 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+let supabaseInstance: SupabaseClient | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase URL or Anon Key is missing. Please check your environment variables.');
-}
+const getSupabase = () => {
+  if (supabaseInstance) return supabaseInstance;
 
-export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || ''
-);
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey || supabaseUrl === "https://your-project-id.supabase.co") {
+    throw new Error('Supabase URL or Anon Key is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.');
+  }
+
+  supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+  return supabaseInstance;
+};
 
 /**
  * Storage Helper
@@ -28,6 +32,7 @@ export const storage = {
    * NOTE: You must create the bucket in the Supabase Dashboard first.
    */
   async upload(bucket: string, path: string, file: File | Blob) {
+    const supabase = getSupabase();
     const { data, error } = await supabase.storage
       .from(bucket)
       .upload(path, file, {
@@ -45,6 +50,7 @@ export const storage = {
    * @param path The path within the bucket
    */
   getPublicUrl(bucket: string, path: string) {
+    const supabase = getSupabase();
     const { data } = supabase.storage
       .from(bucket)
       .getPublicUrl(path);
