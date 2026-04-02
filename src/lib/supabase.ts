@@ -5,8 +5,9 @@ let supabaseInstance: SupabaseClient | null = null;
 const getSupabase = () => {
   if (supabaseInstance) return supabaseInstance;
 
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  // Use environment variables if available, otherwise fallback to hardcoded keys
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "https://dddtdlabomhawbmanqdr.supabase.co";
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZHRkbGFib21oYXdibWFucWRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzc2OTUsImV4cCI6MjA5MDcxMzY5NX0.a0-5es2XJomOTrJ9QyoHnTYt_w4CZsfnnjTCpwYpMdA";
 
   if (!supabaseUrl || !supabaseAnonKey || supabaseUrl === "https://your-project-id.supabase.co") {
     throw new Error('Supabase URL or Anon Key is missing. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.');
