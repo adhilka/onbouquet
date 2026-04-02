@@ -9,17 +9,45 @@ export const FLOWER_TYPES: FlowerType[] = [
     imageUrl: "https://i.ibb.co/XxLP41X6/1000094942-removebg-preview.png",
   },
   {
-    id: "tulip",
-    name: "Tulip",
-    color: "#FB923C",
-    path: "M50 85 C30 85 15 65 15 45 C15 25 30 15 50 35 C70 15 85 25 85 45 C85 65 70 85 50 85 M50 85 L50 45 M30 40 Q50 30 70 40 M40 30 Q50 20 60 30",
-  },
-  {
     id: "sunflower",
     name: "Sunflower",
     color: "#FACC15",
     path: "",
     imageUrl: "https://i.ibb.co/NMhWshG/1000094921-removebg-preview.png",
+  },
+  {
+    id: "misty-orange",
+    name: "Misty Orange",
+    color: "#FB923C",
+    path: "",
+    imageUrl: "https://i.ibb.co/XkJ6cxT3/1000094949-removebg-preview.png",
+  },
+  {
+    id: "custom-lotus",
+    name: "Custom Lotus",
+    color: "#D946EF",
+    path: "",
+    imageUrl: "https://i.ibb.co/XZQjZ6hN/IMG-20260401-080856.png",
+  },
+  {
+    id: "blue-blossom",
+    name: "Blue Blossom",
+    color: "#93C5FD",
+    path: "",
+    imageUrl: "https://i.ibb.co/fY7qhLsD/1000094930-removebg-preview.png",
+  },
+  {
+    id: "sundrop",
+    name: "Sundrop",
+    color: "#FDE047",
+    path: "",
+    imageUrl: "https://i.ibb.co/ffKhKwc/1000094936-removebg-preview.png",
+  },
+  {
+    id: "tulip",
+    name: "Tulip",
+    color: "#FB923C",
+    path: "M50 85 C30 85 15 65 15 45 C15 25 30 15 50 35 C70 15 85 25 85 45 C85 65 70 85 50 85 M50 85 L50 45 M30 40 Q50 30 70 40 M40 30 Q50 20 60 30",
   },
   {
     id: "lavender",
@@ -38,13 +66,6 @@ export const FLOWER_TYPES: FlowerType[] = [
     name: "Lily",
     color: "#FDF4FF",
     path: "M50 15 C65 40 95 55 50 90 C5 55 35 40 50 15 M50 30 C58 48 80 55 50 80 C20 55 42 48 50 30 M50 50 A6 6 0 1 1 49.9 50 M50 20 L50 80 M20 50 L80 50",
-  },
-  {
-    id: "misty-orange",
-    name: "Misty Orange",
-    color: "#FB923C",
-    path: "",
-    imageUrl: "https://i.ibb.co/XkJ6cxT3/1000094949-removebg-preview.png",
   },
   {
     id: "poppy",
@@ -81,27 +102,6 @@ export const FLOWER_TYPES: FlowerType[] = [
     name: "Lotus",
     color: "#F472B6",
     path: "M50 80 C30 80 10 60 10 40 C10 20 30 10 50 30 C70 10 90 20 90 40 C90 60 70 80 50 80 M50 80 C40 70 30 70 20 60 C10 50 10 40 20 30 M50 80 C60 70 70 70 80 60 C90 50 90 40 80 30",
-  },
-  {
-    id: "custom-lotus",
-    name: "Custom Lotus",
-    color: "#D946EF",
-    path: "",
-    imageUrl: "https://i.ibb.co/zWk432qV/1000094564-removebg-preview.png",
-  },
-  {
-    id: "blue-blossom",
-    name: "Blue Blossom",
-    color: "#93C5FD",
-    path: "",
-    imageUrl: "https://i.ibb.co/fY7qhLsD/1000094930-removebg-preview.png",
-  },
-  {
-    id: "sundrop",
-    name: "Sundrop",
-    color: "#FDE047",
-    path: "",
-    imageUrl: "https://i.ibb.co/ffKhKwc/1000094936-removebg-preview.png",
   },
 ];
 
