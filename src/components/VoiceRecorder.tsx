@@ -32,11 +32,14 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onVoiceUpload, cur
         }
       };
 
-      mediaRecorder.onstop = () => {
+      mediaRecorder.onstop = async () => {
         const blob = new Blob(chunksRef.current, { type: "audio/webm" });
         setAudioBlob(blob);
         setAudioUrl(URL.createObjectURL(blob));
         stream.getTracks().forEach(track => track.stop());
+        
+        // Automatically upload after recording
+        await uploadVoice(blob);
       };
 
       mediaRecorder.start();
@@ -54,13 +57,11 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onVoiceUpload, cur
     }
   };
 
-  const uploadVoice = async () => {
-    if (!audioBlob) return;
-
+  const uploadVoice = async (blob: Blob) => {
     setIsUploading(true);
     try {
       const fileName = `voice-${Date.now()}.webm`;
-      await storage.upload('bouquets', fileName, audioBlob);
+      await storage.upload('bouquets', fileName, blob);
       const publicUrl = storage.getPublicUrl('bouquets', fileName);
       onVoiceUpload(publicUrl);
       showToast("Voice message saved! 🎙️");

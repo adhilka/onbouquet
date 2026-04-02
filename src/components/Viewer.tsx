@@ -7,9 +7,10 @@ import { Butterfly } from "./Butterfly";
 import { HowToUse } from "./HowToUse";
 import { cn } from "../lib/utils";
 import confetti from "canvas-confetti";
-import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles, Mic } from "lucide-react";
+import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles, Mic, QrCode } from "lucide-react";
 import { formatDistanceToNow, isAfter } from "date-fns";
 import { toPng } from "html-to-image";
+import { getShareUrl, getShortUrl } from "../utils/sharing";
 
 interface ViewerProps {
   initialState: BouquetState;
@@ -24,6 +25,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
   const [isLetterFullScreen, setIsLetterFullScreen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showHowToUse, setShowHowToUse] = useState(false);
+  const [exportUrl, setExportUrl] = useState<string>("");
   const viewerRef = useRef<HTMLDivElement>(null);
 
   const currentStyle = BOUQUET_STYLES.find((s) => s.id === initialState.styleId) || BOUQUET_STYLES[0];
@@ -74,6 +76,23 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
     
     setIsSaving(true);
     try {
+      // Generate a share URL for the QR code
+      const longUrl = getShareUrl(initialState);
+      let finalUrl = longUrl;
+      
+      try {
+        // Try to get a short URL for a cleaner QR code
+        const short = await getShortUrl(longUrl);
+        if (short) finalUrl = short;
+      } catch (e) {
+        console.warn("Could not generate short URL for export, using long URL", e);
+      }
+      
+      setExportUrl(finalUrl);
+
+      // Give a moment for state to update and QR code image to load
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       // Temporarily make the export container visible for capture
       exportRef.current.style.display = 'flex';
       
@@ -437,10 +456,33 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
               <p className="text-3xl font-bold text-rose-800 mt-1">{initialState.letter.from || "Someone Special"}</p>
             </div>
 
+            <div className="pt-8 border-t-2 border-rose-100 flex items-center justify-between gap-6">
+              <div className="flex-1 space-y-2">
+                <div className="flex items-center gap-2 text-rose-800">
+                  <QrCode size={20} />
+                  <span className="text-sm font-black uppercase tracking-widest">Digital Experience</span>
+                </div>
+                <p className="text-xs text-rose-500 leading-relaxed font-medium">
+                  Scan this code to see the animated bouquet{initialState.voiceUrl ? " and hear the voice message" : ""}!
+                </p>
+              </div>
+              
+              {exportUrl && (
+                <div className="bg-white p-2 rounded-2xl border-2 border-rose-800 sketch-border shadow-sm shrink-0">
+                  <img 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(exportUrl)}`} 
+                    alt="Bouquet QR Code"
+                    className="w-24 h-24"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              )}
+            </div>
+
             {initialState.voiceUrl && (
-              <div className="pt-6 border-t-2 border-rose-100 flex items-center gap-3">
-                <Mic size={24} className="text-rose-400" />
-                <span className="text-sm font-bold text-rose-400 uppercase tracking-widest">Includes Voice Message</span>
+              <div className="pt-4 flex items-center gap-2">
+                <Mic size={18} className="text-rose-400" />
+                <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest">Includes Voice Message</span>
               </div>
             )}
           </div>
