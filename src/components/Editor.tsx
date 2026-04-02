@@ -21,6 +21,15 @@ export const Editor: React.FC = () => {
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"flowers" | "letter" | "style" | "layouts" | "draw" | "reveal" | "butterflies" | null>(null);
+  const [toast, setToast] = useState<{ message: string; id: number } | null>(null);
+
+  const showToast = (message: string) => {
+    const id = Date.now();
+    setToast({ message, id });
+    setTimeout(() => {
+      setToast(current => current?.id === id ? null : current);
+    }, 2000);
+  };
   const [showShare, setShowShare] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
   const [showHowToUse, setShowHowToUse] = useState(false);
@@ -107,6 +116,7 @@ export const Editor: React.FC = () => {
       speed: 0.5 + Math.random() * 1.5,
     };
     setState((prev) => ({ ...prev, butterflies: [...(prev.butterflies || []), newButterfly] }));
+    showToast("Butterfly Added! 🦋");
   };
 
   const updateZIndex = (id: string, direction: "up" | "down") => {
@@ -152,6 +162,7 @@ export const Editor: React.FC = () => {
     setState((prev) => ({ ...prev, flowers: [...prev.flowers, newFlower] }));
     setSelectedId(newFlower.id);
     setActiveTab(null);
+    showToast("Flower Added! 🌸");
   };
 
   const addCustomFlower = (dataUrl: string) => {
@@ -167,6 +178,7 @@ export const Editor: React.FC = () => {
     setState((prev) => ({ ...prev, flowers: [...prev.flowers, newFlower] }));
     setSelectedId(newFlower.id);
     setActiveTab(null);
+    showToast("Custom Flower Added! ✨");
   };
 
   const updateFlower = (id: string, updates: Partial<FlowerInstance>) => {
@@ -446,6 +458,21 @@ export const Editor: React.FC = () => {
           <MessageSquare size={18} />
         </button>
       </div>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ y: 50, opacity: 0, x: "-50%" }}
+            animate={{ y: 0, opacity: 1, x: "-50%" }}
+            exit={{ y: 50, opacity: 0, x: "-50%" }}
+            className="fixed bottom-24 left-1/2 z-[100] bg-stone-900 text-white px-6 py-3 rounded-full font-bold text-sm shadow-2xl flex items-center gap-2 pointer-events-none"
+          >
+            <Sparkles size={16} className="text-yellow-400" />
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Floating Toolbars */}
       <AnimatePresence>

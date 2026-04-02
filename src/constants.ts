@@ -103,6 +103,13 @@ export const FLOWER_TYPES: FlowerType[] = [
     color: "#F472B6",
     path: "M50 80 C30 80 10 60 10 40 C10 20 30 10 50 30 C70 10 90 20 90 40 C90 60 70 80 50 80 M50 80 C40 70 30 70 20 60 C10 50 10 40 20 30 M50 80 C60 70 70 70 80 60 C90 50 90 40 80 30",
   },
+  {
+    id: "butterfly-flower",
+    name: "Butterfly",
+    color: "#FF69B4",
+    path: "",
+    imageUrl: "https://i.ibb.co/LX2D7DGc/1000096677-removebg-preview.png",
+  },
 ];
 
 export const PRESET_LAYOUTS = [
