@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2, Mail, Heart, Gift, Sparkles, Layers, Bug } from "lucide-react";
+import { Plus, Minus, Send, Settings, Trash2, Type, Palette, MessageSquare, X, Eye, Layout, Copy, Share2, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, PenTool, Maximize2, Mail, Heart, Gift, Sparkles, Layers, Bug, Save, HardDrive, RotateCcw } from "lucide-react";
 import { BouquetState, FlowerInstance, ButterflyInstance } from "../types";
 import { FLOWER_TYPES, BOUQUET_STYLES, PRESET_LAYOUTS, BUTTERFLY_COLORS } from "../constants";
 import { Flower } from "./Flower";
@@ -37,6 +37,34 @@ export const Editor: React.FC = () => {
   const [shortUrl, setShortUrl] = useState<string>("");
   const [isShortening, setIsShortening] = useState(false);
   const [shareProgress, setShareProgress] = useState(0);
+  const [hasSavedLocal, setHasSavedLocal] = useState(false);
+
+  // Load from local storage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("onbouquet_draft");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setState(parsed);
+        setHasSavedLocal(true);
+        showToast("Draft restored from local storage! 💾");
+      } catch (e) {
+        console.error("Failed to load draft", e);
+      }
+    }
+  }, []);
+
+  const saveLocally = () => {
+    localStorage.setItem("onbouquet_draft", JSON.stringify(state));
+    setHasSavedLocal(true);
+    showToast("Bouquet saved locally! 💾");
+  };
+
+  const deleteLocal = () => {
+    localStorage.removeItem("onbouquet_draft");
+    setHasSavedLocal(false);
+    showToast("Local draft deleted. 🗑️");
+  };
 
   const handleShare = async () => {
     setShowShare(true);
@@ -59,6 +87,11 @@ export const Editor: React.FC = () => {
       longUrl = getShareUrl(state);
       const short = await getShortUrl(longUrl);
       setShareProgress(100);
+      
+      // Clear local storage when shared
+      localStorage.removeItem("onbouquet_draft");
+      setHasSavedLocal(false);
+
       setTimeout(() => {
         setShortUrl(short);
         setIsShortening(false);
@@ -820,6 +853,25 @@ export const Editor: React.FC = () => {
               <p className="text-rose-500 mb-6 leading-relaxed font-sketch">Your digital bouquet is ready to be delivered. Choose how you'd like to send it!</p>
               
               <div className="space-y-6">
+                {/* Local Storage Section */}
+                <div className="flex flex-col gap-2">
+                  <button 
+                    onClick={saveLocally}
+                    className="flex items-center justify-center gap-2 bg-rose-50 text-rose-800 font-bold py-3 rounded-2xl border-2 border-rose-800/20 hover:border-rose-800 transition-all active:scale-95 text-sm"
+                  >
+                    <Save size={16} />
+                    <span>Save Draft Locally</span>
+                  </button>
+                  {hasSavedLocal && (
+                    <button 
+                      onClick={deleteLocal}
+                      className="text-[10px] font-sketch text-rose-400 uppercase tracking-widest hover:text-red-500 transition-colors flex items-center gap-1 mx-auto"
+                    >
+                      <Trash2 size={10} /> Delete Local Draft
+                    </button>
+                  )}
+                </div>
+
                 {/* QR Code Section */}
                 {shortUrl && !isShortening && (
                   <div className="space-y-3">

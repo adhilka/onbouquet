@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import { X, Plus, Layout, PenTool, Type, Palette, MessageSquare, Send } from "lucide-react";
+import { X, Plus, Layout, PenTool, Type, Palette, MessageSquare, Send, Mic, Save, Download, QrCode, Sparkles } from "lucide-react";
 import { cn } from "../lib/utils";
 
 interface HowToUseProps {
@@ -47,7 +47,7 @@ export const HowToUse: React.FC<HowToUseProps> = ({ onClose }) => {
                 </div>
                 <div>
                   <h4 className="font-bold text-rose-800 text-sm">Add Flowers</h4>
-                  <p className="text-xs text-rose-500 mt-1">Browse and add different types of flowers to your bouquet. You can drag them around, resize them, and rotate them.</p>
+                  <p className="text-xs text-rose-500 mt-1">Browse and add different types of flowers. You can drag them around, resize them, and rotate them.</p>
                 </div>
               </div>
 
@@ -82,6 +82,26 @@ export const HowToUse: React.FC<HowToUseProps> = ({ onClose }) => {
               </div>
 
               <div className="flex gap-3 items-start bg-white p-4 rounded-2xl border-2 border-rose-800/5">
+                <div className="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center shrink-0 border border-rose-200">
+                  <Mic size={16} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-rose-800 text-sm">Voice Message</h4>
+                  <p className="text-xs text-rose-500 mt-1">Record a personal voice message to accompany your bouquet. It will be playable by the recipient!</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start bg-white p-4 rounded-2xl border-2 border-rose-800/5">
+                <div className="w-8 h-8 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center shrink-0 border border-yellow-200">
+                  <Sparkles size={16} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-rose-800 text-sm">Butterflies</h4>
+                  <p className="text-xs text-rose-500 mt-1">Add fluttering butterflies to your bouquet for a magical touch. They move randomly around the canvas!</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start bg-white p-4 rounded-2xl border-2 border-rose-800/5">
                 <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-200">
                   <Palette size={16} />
                 </div>
@@ -90,36 +110,53 @@ export const HowToUse: React.FC<HowToUseProps> = ({ onClose }) => {
                   <p className="text-xs text-rose-500 mt-1">Change the overall aesthetic of your bouquet canvas. Choose from themes like Romantic, Vintage, Midnight, and more.</p>
                 </div>
               </div>
+            </div>
+          </section>
 
+          <section className="space-y-4">
+            <h3 className="text-lg font-bold text-rose-800 uppercase tracking-wider text-sm">3. New Advanced Features</h3>
+            
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex gap-3 items-start bg-white p-4 rounded-2xl border-2 border-rose-800/5">
-                <div className="w-8 h-8 rounded-full bg-rose-100 text-rose-500 flex items-center justify-center shrink-0 border border-rose-200">
-                  <MessageSquare size={16} />
+                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-500 flex items-center justify-center shrink-0 border border-indigo-200">
+                  <Save size={16} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-rose-800 text-sm">Reveal Settings</h4>
-                  <p className="text-xs text-rose-500 mt-1">Customize the "envelope" screen that the recipient sees first. Change the title, subtitle, button text, and icon.</p>
+                  <h4 className="font-bold text-rose-800 text-sm">Save Drafts</h4>
+                  <p className="text-xs text-rose-500 mt-1">Working on a masterpiece? Save your bouquet locally in the "Send" menu. It will be restored automatically when you return!</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3 items-start bg-white p-4 rounded-2xl border-2 border-rose-800/5">
+                <div className="w-8 h-8 rounded-full bg-cyan-100 text-cyan-500 flex items-center justify-center shrink-0 border border-cyan-200">
+                  <Download size={16} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-rose-800 text-sm">Save as Image</h4>
+                  <p className="text-xs text-rose-500 mt-1">Export your bouquet as a high-quality PNG. It even includes a QR code so the recipient can scan it to hear your voice message!</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section className="space-y-3">
-            <h3 className="text-lg font-bold text-rose-800 uppercase tracking-wider text-sm">3. Interacting with Flowers</h3>
+            <h3 className="text-lg font-bold text-rose-800 uppercase tracking-wider text-sm">4. Interacting with Flowers</h3>
             <ul className="list-disc pl-5 text-rose-600 space-y-2 text-sm">
               <li><strong>Move:</strong> Click and drag any flower to move it around the canvas.</li>
-              <li><strong>Select:</strong> Click a flower to select it. A menu will appear allowing you to resize, rotate, duplicate, or delete it.</li>
+              <li><strong>Select:</strong> Click a flower to select it. A menu will appear allowing you to resize, rotate, or delete it.</li>
               <li><strong>Add Notes:</strong> When a flower is selected, you can type a small note that will be attached directly to that specific flower!</li>
+              <li><strong>Butterflies:</strong> These magical creatures move automatically around your bouquet, adding a touch of life and motion.</li>
             </ul>
           </section>
 
           <section className="space-y-3">
-            <h3 className="text-lg font-bold text-rose-800 uppercase tracking-wider text-sm">4. Sharing Your Bouquet</h3>
+            <h3 className="text-lg font-bold text-rose-800 uppercase tracking-wider text-sm">5. Sharing Your Bouquet</h3>
             <div className="bg-rose-800 text-white p-4 rounded-2xl flex gap-4 items-center">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
                 <Send size={18} />
               </div>
               <p className="text-sm leading-relaxed">
-                Once your masterpiece is complete, click the <strong>Send</strong> button (the paper plane icon) in the bottom toolbar. This will generate a unique link that you can copy and send to your special someone!
+                Once your masterpiece is complete, click the <strong>Send</strong> button in the bottom toolbar. You can save a local draft, or generate a link to share with your special someone!
               </p>
             </div>
           </section>
