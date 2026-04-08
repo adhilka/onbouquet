@@ -130,11 +130,62 @@ export const Editor: React.FC = () => {
           };
         });
 
-        return {
+        let newState = {
           ...prev,
           flowers: layoutFlowers
         };
+
+        // Special handling for Garden layout - Procedural generation to fill screen
+        if (layoutId === "thick-garden") {
+          newState.styleId = "garden";
+          
+          const fullScreenFlowers: FlowerInstance[] = [];
+          
+          // Dynamically calculate density based on screen size
+          const spacing = 14; // Even tighter for zero gaps
+          const cols = Math.ceil(window.innerWidth / spacing) + 2;
+          const rows = Math.ceil(window.innerHeight / spacing) + 2;
+          
+          for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+              // Offset slightly to ensure edges are covered
+              const x = (c * spacing) - spacing + (Math.random() * 8 - 4);
+              const y = (r * spacing) - spacing + (Math.random() * 8 - 4);
+              
+              // Only grass and mini flowers as requested
+              const isFlower = Math.random() > 0.92;
+              fullScreenFlowers.push({
+                id: Math.random().toString(36).substr(2, 9),
+                typeId: isFlower ? "mini-flower" : "grass",
+                x,
+                y,
+                scale: 0.8 + Math.random() * 0.4,
+                rotation: Math.random() * 40 - 20,
+                zIndex: r
+              });
+            }
+          }
+          
+          // Removed larger flowers (daisy, lavender, poppy) as requested
+
+          newState.flowers = fullScreenFlowers;
+          
+          // Add more butterflies for a full screen garden
+          newState.butterflies = [
+            { id: "b1", x: 50, y: 50, scale: 0.8, rotation: 0, color: "#FFD700", speed: 1.2 },
+            { id: "b2", x: 350, y: 100, scale: 0.7, rotation: 15, color: "#87CEEB", speed: 1.5 },
+            { id: "b3", x: 100, y: 300, scale: 0.9, rotation: -10, color: "#FF69B4", speed: 1.0 },
+            { id: "b4", x: 300, y: 350, scale: 0.6, rotation: 45, color: "#9370DB", speed: 1.3 },
+            { id: "b5", x: 200, y: 200, scale: 0.75, rotation: -30, color: "#FF4500", speed: 1.1 },
+            { id: "b6", x: 150, y: 150, scale: 0.7, rotation: 60, color: "#93C5FD", speed: 1.4 },
+            { id: "b7", x: 50, y: 350, scale: 0.8, rotation: -20, color: "#FDE047", speed: 1.2 },
+            { id: "b8", x: 350, y: 50, scale: 0.7, rotation: 10, color: "#A78BFA", speed: 1.5 },
+          ];
+        }
+
+        return newState;
       });
+      showToast(`${layout.name} applied! ✨`);
       setActiveTab(null);
     }
   };
@@ -594,30 +645,42 @@ export const Editor: React.FC = () => {
           )}
 
             {activeTab === "layouts" && (
-              <div className="grid grid-cols-2 gap-2">
-                {PRESET_LAYOUTS.map((layout) => (
-                  <button
-                    key={layout.id}
-                    onClick={() => applyLayout(layout.id)}
-                    className={cn(
-                      "py-3 rounded-xl bg-gray-50 font-bold text-gray-600 transition-all text-xs border border-rose-100",
-                      `hover:${currentStyle.accentBg} hover:text-white`
-                    )}
-                  >
-                    {layout.name}
-                  </button>
-                ))}
+              <div className="space-y-4">
                 <button
-                  onClick={() => {
-                    if (confirm("Clear all flowers?")) {
-                      setState(prev => ({ ...prev, flowers: [] }));
-                      setActiveTab(null);
-                    }
-                  }}
-                  className="py-3 rounded-xl bg-red-50 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-all text-xs border border-red-100"
+                  onClick={() => applyLayout("thick-garden")}
+                  className={cn(
+                    "w-full py-4 rounded-2xl text-white font-bold shadow-lg flex items-center justify-center gap-2 sketch-border border-2 active:scale-95 transition-all",
+                    currentStyle.accentBg, currentStyle.accentBorder
+                  )}
                 >
-                  Clear All
+                  <Sparkles size={18} />
+                  Build Plain Garden 🌿
                 </button>
+                <div className="grid grid-cols-2 gap-2">
+                  {PRESET_LAYOUTS.filter(l => l.id !== "thick-garden").map((layout) => (
+                    <button
+                      key={layout.id}
+                      onClick={() => applyLayout(layout.id)}
+                      className={cn(
+                        "py-3 rounded-xl bg-gray-50 font-bold text-gray-600 transition-all text-xs border border-rose-100",
+                        `hover:${currentStyle.accentBg} hover:text-white`
+                      )}
+                    >
+                      {layout.name}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => {
+                      if (confirm("Clear all flowers?")) {
+                        setState(prev => ({ ...prev, flowers: [] }));
+                        setActiveTab(null);
+                      }
+                    }}
+                    className="py-3 rounded-xl bg-red-50 font-bold text-red-500 hover:bg-red-500 hover:text-white transition-all text-xs border border-red-100"
+                  >
+                    Clear All
+                  </button>
+                </div>
               </div>
             )}
 

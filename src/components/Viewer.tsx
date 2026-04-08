@@ -7,7 +7,7 @@ import { Butterfly } from "./Butterfly";
 import { HowToUse } from "./HowToUse";
 import { cn } from "../lib/utils";
 import confetti from "canvas-confetti";
-import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles, Mic, QrCode } from "lucide-react";
+import { Mail, Heart, Clock, ChevronDown, ChevronUp, Maximize2, Minimize2, Download, Loader2, Gift, Sparkles, Mic, QrCode, Sprout } from "lucide-react";
 import { formatDistanceToNow, isAfter } from "date-fns";
 import { toPng } from "html-to-image";
 import { getShareUrl, getShortUrl } from "../utils/sharing";
@@ -164,6 +164,7 @@ export const Viewer: React.FC<ViewerProps> = ({ initialState }) => {
                     {initialState.revealConfig?.icon === "heart" && <Heart className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
                     {initialState.revealConfig?.icon === "gift" && <Gift className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
                     {initialState.revealConfig?.icon === "sparkles" && <Sparkles className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
+                    {initialState.revealConfig?.icon === "sprout" && <Sprout className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
                     {(!initialState.revealConfig?.icon || initialState.revealConfig?.icon === "mail") && <Mail className={cn("group-hover:scale-110 transition-transform", currentStyle.accentText)} size={100} />}
                   </>
                 )}

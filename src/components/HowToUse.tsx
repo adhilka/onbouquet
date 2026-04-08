@@ -57,7 +57,7 @@ export const HowToUse: React.FC<HowToUseProps> = ({ onClose }) => {
                 </div>
                 <div>
                   <h4 className="font-bold text-rose-800 text-sm">Layouts</h4>
-                  <p className="text-xs text-rose-500 mt-1">Choose a pre-made arrangement shape (like Circle, Heart, or Cascade) to automatically organize your flowers.</p>
+                  <p className="text-xs text-rose-500 mt-1">Choose a pre-made arrangement shape (like Circle, Heart, or Cascade) or the new <strong>Plain Greenery Garden</strong> to start with a beautiful base.</p>
                 </div>
               </div>
 

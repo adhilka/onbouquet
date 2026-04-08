@@ -110,6 +110,18 @@ export const FLOWER_TYPES: FlowerType[] = [
     path: "",
     imageUrl: "https://i.ibb.co/LX2D7DGc/1000096677-removebg-preview.png",
   },
+  {
+    id: "grass",
+    name: "Small Grass",
+    color: "#10B981",
+    path: "M50 95 L50 40 M50 95 L30 50 M50 95 L70 50 M50 95 L20 65 M50 95 L80 65 M50 95 L40 30 M50 95 L60 30 M50 95 L45 20 M50 95 L55 20",
+  },
+  {
+    id: "mini-flower",
+    name: "Mini Flower",
+    color: "#FDE047",
+    path: "M50 50 m-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0 M50 45 L50 35 M55 47 L63 42 M55 53 L63 58 M50 55 L50 65 M45 53 L37 58 M45 47 L37 42",
+  },
 ];
 
 export const PRESET_LAYOUTS = [
@@ -226,6 +238,73 @@ export const PRESET_LAYOUTS = [
       { typeId: "orchid", x: 200, y: 300, scale: 1.1, rotation: 0 },
       { typeId: "lotus", x: 300, y: 300, scale: 1.1, rotation: 0 },
     ]
+  },
+  {
+    id: "thick-garden",
+    name: "Thick Garden",
+    flowers: [
+      // Row 1 - Very dense grass
+      { typeId: "grass", x: 10, y: 360, scale: 0.8, rotation: -5 },
+      { typeId: "grass", x: 25, y: 365, scale: 0.7, rotation: 5 },
+      { typeId: "grass", x: 40, y: 360, scale: 0.9, rotation: 0 },
+      { typeId: "grass", x: 55, y: 365, scale: 0.8, rotation: -10 },
+      { typeId: "grass", x: 70, y: 360, scale: 0.7, rotation: 10 },
+      { typeId: "grass", x: 85, y: 365, scale: 0.9, rotation: -5 },
+      { typeId: "grass", x: 100, y: 360, scale: 0.8, rotation: 5 },
+      { typeId: "grass", x: 115, y: 365, scale: 0.7, rotation: 0 },
+      { typeId: "grass", x: 130, y: 360, scale: 0.9, rotation: -10 },
+      { typeId: "grass", x: 145, y: 365, scale: 0.8, rotation: 10 },
+      { typeId: "grass", x: 160, y: 360, scale: 0.7, rotation: -5 },
+      { typeId: "grass", x: 175, y: 365, scale: 0.9, rotation: 5 },
+      { typeId: "grass", x: 190, y: 360, scale: 0.8, rotation: 0 },
+      { typeId: "grass", x: 205, y: 365, scale: 0.7, rotation: -10 },
+      { typeId: "grass", x: 220, y: 360, scale: 0.9, rotation: 10 },
+      { typeId: "grass", x: 235, y: 365, scale: 0.8, rotation: -5 },
+      { typeId: "grass", x: 250, y: 360, scale: 0.7, rotation: 5 },
+      { typeId: "grass", x: 265, y: 365, scale: 0.9, rotation: 0 },
+      { typeId: "grass", x: 280, y: 360, scale: 0.8, rotation: -10 },
+      { typeId: "grass", x: 295, y: 365, scale: 0.7, rotation: 10 },
+      { typeId: "grass", x: 310, y: 360, scale: 0.9, rotation: -5 },
+      { typeId: "grass", x: 325, y: 365, scale: 0.8, rotation: 5 },
+      { typeId: "grass", x: 340, y: 360, scale: 0.7, rotation: 0 },
+      { typeId: "grass", x: 355, y: 365, scale: 0.9, rotation: -10 },
+      { typeId: "grass", x: 370, y: 360, scale: 0.8, rotation: 10 },
+      { typeId: "grass", x: 385, y: 365, scale: 0.7, rotation: -5 },
+      
+      // Row 2 - Slightly behind for depth
+      { typeId: "grass", x: 15, y: 345, scale: 0.6, rotation: 5 },
+      { typeId: "grass", x: 45, y: 340, scale: 0.5, rotation: -5 },
+      { typeId: "grass", x: 75, y: 345, scale: 0.6, rotation: 10 },
+      { typeId: "grass", x: 105, y: 340, scale: 0.5, rotation: -10 },
+      { typeId: "grass", x: 135, y: 345, scale: 0.6, rotation: 5 },
+      { typeId: "grass", x: 165, y: 340, scale: 0.5, rotation: -5 },
+      { typeId: "grass", x: 195, y: 345, scale: 0.6, rotation: 10 },
+      { typeId: "grass", x: 225, y: 340, scale: 0.5, rotation: -10 },
+      { typeId: "grass", x: 255, y: 345, scale: 0.6, rotation: 5 },
+      { typeId: "grass", x: 285, y: 340, scale: 0.5, rotation: -5 },
+      { typeId: "grass", x: 315, y: 345, scale: 0.6, rotation: 10 },
+      { typeId: "grass", x: 345, y: 340, scale: 0.5, rotation: -10 },
+      { typeId: "grass", x: 375, y: 345, scale: 0.6, rotation: 5 },
+
+      // Mini Flowers scattered in the grass
+      { typeId: "mini-flower", x: 30, y: 335, scale: 0.4, rotation: 0 },
+      { typeId: "mini-flower", x: 80, y: 330, scale: 0.3, rotation: 15 },
+      { typeId: "mini-flower", x: 120, y: 340, scale: 0.4, rotation: -10 },
+      { typeId: "mini-flower", x: 170, y: 335, scale: 0.3, rotation: 5 },
+      { typeId: "mini-flower", x: 210, y: 345, scale: 0.4, rotation: 20 },
+      { typeId: "mini-flower", x: 260, y: 330, scale: 0.3, rotation: -5 },
+      { typeId: "mini-flower", x: 310, y: 340, scale: 0.4, rotation: 10 },
+      { typeId: "mini-flower", x: 360, y: 335, scale: 0.3, rotation: -15 },
+
+      // Larger flowers for variety
+      { typeId: "daisy", x: 60, y: 290, scale: 0.5, rotation: 0 },
+      { typeId: "daisy", x: 150, y: 270, scale: 0.4, rotation: 15 },
+      { typeId: "daisy", x: 250, y: 280, scale: 0.5, rotation: -10 },
+      { typeId: "daisy", x: 340, y: 290, scale: 0.4, rotation: 5 },
+      { typeId: "lavender", x: 100, y: 240, scale: 0.6, rotation: -5 },
+      { typeId: "lavender", x: 200, y: 220, scale: 0.7, rotation: 0 },
+      { typeId: "lavender", x: 300, y: 240, scale: 0.6, rotation: 5 },
+    ]
   }
 ];
 
@@ -325,5 +404,16 @@ export const BOUQUET_STYLES: BouquetStyle[] = [
     accentBorder: "border-emerald-700",
     secondaryBg: "bg-emerald-50",
     secondaryText: "text-emerald-700",
+  },
+  {
+    id: "garden",
+    name: "Plain Garden",
+    bgGradient: "bg-green-200",
+    bgPattern: "texture-natural bg-blend-multiply",
+    accentBg: "bg-emerald-600",
+    accentText: "text-emerald-600",
+    accentBorder: "border-emerald-700",
+    secondaryBg: "bg-green-100",
+    secondaryText: "text-green-700",
   }
 ];

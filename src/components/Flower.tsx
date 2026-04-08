@@ -105,7 +105,7 @@ export const Flower: React.FC<FlowerProps> = ({
           <path
             d={type.path}
             stroke="black"
-            strokeWidth="1"
+            strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             fillOpacity="0.8"
