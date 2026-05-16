@@ -646,16 +646,6 @@ export const Editor: React.FC = () => {
 
             {activeTab === "layouts" && (
               <div className="space-y-4">
-                <button
-                  onClick={() => applyLayout("thick-garden")}
-                  className={cn(
-                    "w-full py-4 rounded-2xl text-white font-bold shadow-lg flex items-center justify-center gap-2 sketch-border border-2 active:scale-95 transition-all",
-                    currentStyle.accentBg, currentStyle.accentBorder
-                  )}
-                >
-                  <Sparkles size={18} />
-                  Build Plain Garden 🌿
-                </button>
                 <div className="grid grid-cols-2 gap-2">
                   {PRESET_LAYOUTS.filter(l => l.id !== "thick-garden").map((layout) => (
                     <button
