@@ -305,6 +305,71 @@ export const PRESET_LAYOUTS = [
       { typeId: "lavender", x: 200, y: 220, scale: 0.7, rotation: 0 },
       { typeId: "lavender", x: 300, y: 240, scale: 0.6, rotation: 5 },
     ]
+  },
+  {
+    id: "star",
+    name: "Lucky Star",
+    flowers: [
+      { typeId: "sunflower", x: 200, y: 80, scale: 1.4, rotation: 0 },
+      { typeId: "daisy", x: 270, y: 320, scale: 1.1, rotation: 144 },
+      { typeId: "rose", x: 80, y: 170, scale: 1.2, rotation: 216 },
+      { typeId: "rose", x: 320, y: 170, scale: 1.2, rotation: 72 },
+      { typeId: "daisy", x: 130, y: 320, scale: 1.1, rotation: 288 },
+      { typeId: "mini-flower", x: 200, y: 160, scale: 0.8, rotation: 0 },
+      { typeId: "mini-flower", x: 240, y: 220, scale: 0.8, rotation: 0 },
+      { typeId: "mini-flower", x: 160, y: 220, scale: 0.8, rotation: 0 },
+    ]
+  },
+  {
+    id: "infinity",
+    name: "Infinity Bloom",
+    flowers: [
+      { typeId: "rose", x: 200, y: 200, scale: 1.2, rotation: 0 },
+      { typeId: "cherry-blossom", x: 250, y: 150, scale: 1.1, rotation: 45 },
+      { typeId: "cherry-blossom", x: 320, y: 200, scale: 1.3, rotation: 90 },
+      { typeId: "cherry-blossom", x: 250, y: 250, scale: 1.1, rotation: 135 },
+      { typeId: "orchid", x: 150, y: 150, scale: 1.1, rotation: -45 },
+      { typeId: "orchid", x: 80, y: 200, scale: 1.3, rotation: -90 },
+      { typeId: "orchid", x: 150, y: 250, scale: 1.1, rotation: -135 },
+    ]
+  },
+  {
+    id: "diamond",
+    name: "Diamond Ring",
+    flowers: [
+      { typeId: "lily", x: 200, y: 80, scale: 1.3, rotation: 0 },
+      { typeId: "rose", x: 260, y: 140, scale: 1.1, rotation: 45 },
+      { typeId: "lily", x: 320, y: 200, scale: 1.3, rotation: 90 },
+      { typeId: "rose", x: 260, y: 260, scale: 1.1, rotation: 135 },
+      { typeId: "lily", x: 200, y: 320, scale: 1.3, rotation: 180 },
+      { typeId: "rose", x: 140, y: 260, scale: 1.1, rotation: 225 },
+      { typeId: "lily", x: 80, y: 200, scale: 1.3, rotation: 270 },
+      { typeId: "rose", x: 140, y: 140, scale: 1.1, rotation: 315 },
+    ]
+  },
+  {
+    id: "moon",
+    name: "Crescent Moon",
+    flowers: [
+      { typeId: "misty-orange", x: 180, y: 80, scale: 1.1, rotation: -30 },
+      { typeId: "sundrop", x: 250, y: 120, scale: 1.2, rotation: -15 },
+      { typeId: "sunflower", x: 300, y: 200, scale: 1.4, rotation: 0 },
+      { typeId: "sundrop", x: 250, y: 280, scale: 1.2, rotation: 15 },
+      { typeId: "misty-orange", x: 180, y: 320, scale: 1.1, rotation: 30 },
+      { typeId: "mini-flower", x: 200, y: 180, scale: 0.6, rotation: 0 },
+      { typeId: "mini-flower", x: 220, y: 220, scale: 0.6, rotation: 0 },
+    ]
+  },
+  {
+    id: "path",
+    name: "Butterfly Path",
+    flowers: [
+      { typeId: "lavender", x: 100, y: 80, scale: 1, rotation: -20 },
+      { typeId: "butterfly-flower", x: 300, y: 140, scale: 1.2, rotation: 20 },
+      { typeId: "lavender", x: 100, y: 200, scale: 1, rotation: -20 },
+      { typeId: "butterfly-flower", x: 300, y: 260, scale: 1.2, rotation: 20 },
+      { typeId: "lavender", x: 100, y: 320, scale: 1, rotation: -20 },
+    ]
   }
 ];
 
